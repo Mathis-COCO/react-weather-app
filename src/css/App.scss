@@ -31,6 +31,15 @@
   border: 0;
   margin: 0 0 0 20px;
   background-color: transparent;
+  width: 100%;
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+}
+
+.searchbar > input:focus{
+  outline: none;
 }
 
 .searchbar > input::placeholder {
@@ -40,10 +49,8 @@
   letter-spacing: 3px;
 }
 
-.searchbar > input::placeholder::selection {
-  
-}
-
-.searchbar > div {
+.searchbar > button {
   margin: 7px 20px 0 auto;
+  background-color: transparent;
+  border: 0;
 }
