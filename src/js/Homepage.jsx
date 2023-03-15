@@ -23,12 +23,14 @@ function Homepage() {
 
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
         &units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
+            const temperature = json.main.temp;
+            const feelsLike = json.main.feels_like;
             if (json.cod === '404') {
                 console.log('erreur 404');
             }
 
             return (
-                console.log(json.main.temp)
+                console.log(temperature, feelsLike)
             );
         });
     }
@@ -40,6 +42,9 @@ function Homepage() {
                 <div className='searchbar'>
                     <input onChange={updateLoc} type='text' placeholder='Rechercher...'/>
                     <button onClick={apiLocation}><FiSearch color='white' fontSize='1.5em' /></button>
+                </div>
+                <div>
+                    <p className='tempBox'></p>
                 </div>
             </div>
         </div>
