@@ -1,6 +1,49 @@
+.main-div {
+  background-image: url('../img/sunset.png');
+  background-size: cover;
+  height: 100vh;
+  opacity: 0.9;
+}
+
 .home-title {
-  color: blue;
+  color: rgb(255, 255, 255);
   text-align: center;
   font-weight: 300;
   letter-spacing: 7px;
+  margin: 0;
+}
+
+.searchbar {
+  display: flex;
+  margin: 40vh auto auto auto;
+  width: 600px;
+  height: 35px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.searchbar > input {
+  border: 0;
+  margin: 0 0 0 20px;
+  background-color: transparent;
+}
+
+.searchbar > input::placeholder {
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.searchbar > input::placeholder::selection {
+  
+}
+
+.searchbar > div {
+  margin: 7px 20px 0 auto;
 }
