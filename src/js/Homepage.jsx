@@ -1,37 +1,41 @@
 /* eslint-disable capitalized-comments */
 /* eslint-disable no-unused-vars */
 /* eslint-disable indent */
-import {React, useRef, useState} from 'react';
+import {React, useState} from 'react';
 import '../css/App.scss';
 import {FiSearch} from 'react-icons/fi';
-import EmptyFIeld from '../components/EmptyField';
+import Temp from '../components/Temp';
+import {useNavigate} from 'react-router-dom';
 
 function Homepage() {
     const [location, setLocation] = useState('');
+    const [searchInfos, setInfos] = useState('');
+    const [showResults, setShowResults] = useState(false);
+    const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
+    // METTRE L'API KEY DANS UNE VARIABLE D'ENVIRONNEMENT
+
+    console.log(process.env);
     const updateLoc = event => {
         setLocation(event.target.value);
     };
 
     function apiLocation() {
-        console.log(location);
-
-        const APIKey = '4156ad6137c93f56581b6364fd3ff8f7';
-
         if (location === '') {
+            setShowResults(false);
             console.log('add alert here');
+            return;
         }
 
+        setShowResults(true);
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
         &units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
-            const temperature = json.main.temp;
-            const feelsLike = json.main.feels_like;
             if (json.cod === '404') {
-                console.log('erreur 404');
+                setShowResults(false);
+                useNavigate('/');
             }
 
-            return (
-                console.log(temperature, feelsLike)
-            );
+            setInfos(json.main);
+            console.log(searchInfos);
         });
     }
 
@@ -43,9 +47,13 @@ function Homepage() {
                     <input onChange={updateLoc} type='text' placeholder='Rechercher...'/>
                     <button onClick={apiLocation}><FiSearch color='white' fontSize='1.5em' /></button>
                 </div>
-                <div>
-                    <p className='tempBox'></p>
-                </div>
+                { showResults
+                    ? <div>
+                        <Temp temp={searchInfos.temp} />
+                        <p className='tempBox'></p>
+                      </div>
+                : null }
+
             </div>
         </div>
     );
