@@ -4,22 +4,21 @@
 import {React, useState} from 'react';
 import '../css/App.scss';
 import {FiSearch} from 'react-icons/fi';
-import Temp from '../components/Temp';
-import {useNavigate} from 'react-router-dom';
+import SearchResults from '../components/SearchResults';
 
 function Homepage() {
     const [location, setLocation] = useState('');
     const [searchInfos, setInfos] = useState('');
+    const [weatherDesc, setDesc] = useState('');
     const [showResults, setShowResults] = useState(false);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
-    // METTRE L'API KEY DANS UNE VARIABLE D'ENVIRONNEMENT
 
-    console.log(process.env);
     const updateLoc = event => {
         setLocation(event.target.value);
     };
 
-    function apiLocation() {
+    function apiLocation(event) {
+        event.preventDefault();
         if (location === '') {
             setShowResults(false);
             console.log('add alert here');
@@ -31,26 +30,27 @@ function Homepage() {
         &units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
             if (json.cod === '404') {
                 setShowResults(false);
-                useNavigate('/');
             }
 
             setInfos(json.main);
+            setDesc(json.weather[0].main);
             console.log(searchInfos);
+            console.log(weatherDesc);
         });
     }
 
     return (
         <div className='main-div'>
             <h1 className='home-title'>HOMEPAGE</h1>
+            <img src='../img/{weatherDesc}.gif' alt='background effect' />
             <div>
-                <div className='searchbar'>
+                <form onSubmit={apiLocation} className='searchbar'>
                     <input onChange={updateLoc} type='text' placeholder='Rechercher...'/>
-                    <button onClick={apiLocation}><FiSearch color='white' fontSize='1.5em' /></button>
-                </div>
+                    <button type='submit'><FiSearch color='white' fontSize='1.5em' /></button>
+                </form>
                 { showResults
                     ? <div>
-                        <Temp temp={searchInfos.temp} />
-                        <p className='tempBox'></p>
+                        <SearchResults {...searchInfos} />
                       </div>
                 : null }
 
