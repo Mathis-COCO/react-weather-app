@@ -51,10 +51,13 @@ function Homepage() {
                 { showResults
                     ? <div>
                         <SearchResults {...allInfos.main} />
-                        <WeatherMap
-                            lat={allInfos.coord.lat}
-                            lon={allInfos.coord.lon}
-                        />
+                        <div className='map-homepage'>
+                            <WeatherMap
+                                lat={allInfos.coord.lat}
+                                lon={allInfos.coord.lon}
+                            />
+                        </div>
+
                       </div>
                 : null }
 
