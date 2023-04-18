@@ -5,7 +5,7 @@ import {React, useState} from 'react';
 import '../css/App.scss';
 import {FiSearch} from 'react-icons/fi';
 import SearchResults from '../components/SearchResults';
-import WeatherMap from '../components/Map';
+import WeatherMap from '../components/Map.tsx';
 
 function Homepage() {
     const [location, setLocation] = useState('');
@@ -52,8 +52,8 @@ function Homepage() {
                     ? <div>
                         <SearchResults {...allInfos.main} />
                         <WeatherMap
-                            lat={ -0.3667 /* apiResponseBody.coord.lat  */}
-                            lon={ 43.3 /* apiResponseBody.coord.lon */}
+                            lat={allInfos.coord.lat}
+                            lon={allInfos.coord.lon}
                         />
                       </div>
                 : null }
