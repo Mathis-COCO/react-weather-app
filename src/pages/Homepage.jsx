@@ -5,7 +5,7 @@ import {React, useState} from 'react';
 import '../css/App.scss';
 import {FiSearch} from 'react-icons/fi';
 import SearchResults from '../components/SearchResults';
-import WeatherMap from '../components/Map.tsx';
+import WeatherMap from '../components/Map.jsx';
 
 function Homepage() {
     const [location, setLocation] = useState('');
