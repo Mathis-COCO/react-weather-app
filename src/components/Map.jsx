@@ -16,13 +16,14 @@ function ChangeView({center, zoom}) {
 
 function WeatherMap(props) {
     const mapRef = useRef();
-    const {lat, lon} = props;
+    const {lat, lon, height, width} = props;
     const position = [lat, lon];
+    console.log(height, width);
 
     const styles = {
         mapContainer: {
-            height: 700,
-            width: 1000,
+            height,
+            width,
         },
     };
 

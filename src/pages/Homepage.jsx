@@ -6,6 +6,7 @@ import '../css/App.scss';
 import {FiSearch} from 'react-icons/fi';
 import SearchResults from '../components/SearchResults';
 import WeatherMap from '../components/Map.jsx';
+import Navbar from '../components/Navbar';
 
 function Homepage() {
     const [location, setLocation] = useState('');
@@ -41,7 +42,7 @@ function Homepage() {
 
     return (
         <div className='main-div'>
-            <h1 className='home-title'>HOMEPAGE</h1>
+            <Navbar />
             {/* <img src='../img/{allInfos.weather[0].main}.gif' alt='background effect' /> */}
             <div>
                 <form onSubmit={apiLocation} className='searchbar'>
@@ -55,6 +56,8 @@ function Homepage() {
                             <WeatherMap
                                 lat={allInfos.coord.lat}
                                 lon={allInfos.coord.lon}
+                                height={700}
+                                width={1000}
                             />
                         </div>
 

@@ -1,0 +1,44 @@
+.navbar-c-main {
+    height: 56px;
+    overflow: hidden;
+}
+
+.inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-logo {
+    margin: 0 0 0 30px;
+    height: 80px;
+    transition: height 1s ease 0s;
+}
+
+.navbar-title {
+    color: #ffffff;
+    letter-spacing: 2.5px;
+    text-transform: lowercase;
+    font-size: 26px;
+    margin: 10px 0 0 40px;
+}
+
+.navbar-left {
+    cursor: pointer;
+}
+
+.navbar-left:hover .navbar-logo{
+    height: 170px;
+}
+
+.navbar-c-logo {
+    width: 150px;
+}
+
+.navbar-right {
+    color: #ffffff;
+    letter-spacing: 2.5px;
+    text-transform: lowercase;
+    font-size: 26px;
+    margin: 0 40px 0 0;
+    vertical-align: middle;
+}
