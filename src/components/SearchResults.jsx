@@ -9,12 +9,10 @@ import Humidity from './Humidity.jsx';
 function SearchResults(props) {
     return (
         <div>
-            <div className='search-results-bg'>
-                <Temp temp={props.temp} />
-                <Humidity humidity={props.humidity} />
-            </div>
+            <Temp temp={props.temp} />
+            <Humidity humidity={props.humidity} />
         </div>
-  );
+    );
 }
 
 export default SearchResults;

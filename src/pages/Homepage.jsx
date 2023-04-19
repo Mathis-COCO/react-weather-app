@@ -11,19 +11,30 @@ import Navbar from '../components/Navbar';
 function Homepage() {
     const [location, setLocation] = useState('');
     const [allInfos, setAllInfos] = useState('');
-    let apiResponseBody = {};
     const [showResults, setShowResults] = useState(false);
+    const [margin, setMargin] = useState(40);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
 
     const updateLoc = event => {
         setLocation(event.target.value);
     };
 
+    const styles = {
+        searchbar: {
+            transition: 'all 1s ease-out',
+            marginTop: `${margin}vh`,
+        },
+        results: {
+            opacity: 1,
+        },
+    };
+
     function apiLocation(event) {
         event.preventDefault();
         if (location === '') {
             setShowResults(false);
-            console.log('add alert here');
+            setMargin(40);
+            // AJOUTER UNE ALERTE ICI
             return;
         }
 
@@ -34,36 +45,29 @@ function Homepage() {
             }
 
             setShowResults(true);
-            apiResponseBody = json;
-            setAllInfos(apiResponseBody);
-            console.log(apiResponseBody);
+            setMargin(10);
+            setAllInfos(json);
         });
     }
 
     return (
         <div className='main-div'>
             <Navbar />
-            {/* <img src='../img/{allInfos.weather[0].main}.gif' alt='background effect' /> */}
             <div>
-                <form onSubmit={apiLocation} className='searchbar'>
+                <form onSubmit={apiLocation} className='searchbar' style={styles.searchbar} >
                     <input onChange={updateLoc} type='text' placeholder='Rechercher...'/>
-                    <button type='submit'><FiSearch color='white' fontSize='1.5em' /></button>
+                    <div>
+                        <button type='submit'><FiSearch color='white' fontSize='1.5em' /></button>
+                    </div>
                 </form>
                 { showResults
-                    ? <div>
+                    ? <div className='results-card' style={styles.results}>
                         <SearchResults {...allInfos.main} />
                         <div className='map-homepage'>
-                            <WeatherMap
-                                lat={allInfos.coord.lat}
-                                lon={allInfos.coord.lon}
-                                height={700}
-                                width={1000}
-                            />
+                            <WeatherMap lat={allInfos.coord.lat} lon={allInfos.coord.lon} height={700} width={1000} />
                         </div>
-
                       </div>
                 : null }
-
             </div>
         </div>
     );
