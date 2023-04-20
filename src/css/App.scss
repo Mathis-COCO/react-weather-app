@@ -67,7 +67,7 @@
 
 .results-card {
   margin: 50px 0 0 0;
-  width: 1200px;
+  width: 1000px;
   justify-content: space-around;
   margin: 50px auto auto auto;
 
@@ -78,6 +78,46 @@
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
   border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.option-btn-container {
+  background-color: red;
+}
+
+.option-parent {
+  background-color: rgba(89, 89, 89, 0.459);
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  height: 40px;
+  width: 40px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  margin: 100px;
+  text-align: center;
+}
+
+.option-parent:hover {
+    height: 160px;
+    background-color: transparent;
+}
+
+.option-parent:hover .option-btn {
+    opacity: 1;
+}
+
+.option-btn {
+  background-color: rgba(89, 89, 89, 0.459);
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  height: 40px;
+  width: 40px;
+  margin: 10px 0 10px 0;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
   opacity: 0;
-  transition: 'opacity 1s linear 2s';
 }

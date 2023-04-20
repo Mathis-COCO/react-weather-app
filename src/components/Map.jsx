@@ -31,7 +31,7 @@ function WeatherMap(props) {
         <div className='map-main-container'>
             <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} ref={mapRef} style={styles.mapContainer}>
                 <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
-                <ChangeView center={position} zoom={9} />
+                <ChangeView center={position} zoom={12} />
             </MapContainer>
         </div>
 

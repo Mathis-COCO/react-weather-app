@@ -8,7 +8,7 @@ import Humidity from './Humidity.jsx';
 
 function SearchResults(props) {
     return (
-        <div>
+        <div className='space-evenly'>
             <Temp temp={props.temp} />
             <Humidity humidity={props.humidity} />
         </div>
