@@ -16,6 +16,7 @@ function Homepage() {
     const [showResults, setShowResults] = useState(false);
     const [margin, setMargin] = useState(40);
     const [showMap, setShowMap] = useState(true);
+    const [resultHeight, setResultHeight] = useState(0);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
 
     const updateLoc = event => {
@@ -24,26 +25,28 @@ function Homepage() {
 
     const styles = {
         searchbar: {
-            transition: showMap === true ? 'all 1s ease-out' : 'all 1s ease-out 1s',
+            transition: showMap ? 'all 1s ease-out' : 'all 1s ease-out 1s',
             marginTop: `${margin}vh`,
         },
         results: {
-            height: showMap === true ? '690px' : '80px',
-            transition: showMap === true ? 'height 1s ease 1s' : 'height 1s ease 0s',
+            height: `${resultHeight}px`,
+            transition: showMap ? 'height 1s ease 1s' : 'height 1s ease 0s',
         },
         map: {
-            opacity: showMap === true ? 1 : 0,
-            transition: showMap === true ? 'opacity 1s ease 1s' : 'opacity 1s ease 0s',
+            opacity: showMap ? 1 : 0,
+            transition: showMap ? 'opacity 1s ease 1s' : 'opacity 1s ease 0s',
         },
     };
 
     function toggleMap() {
-        if (showMap === true) {
+        if (showMap) {
             setShowMap(false);
             setMargin(40);
+            setResultHeight(80);
         } else {
             setShowMap(true);
             setMargin(10);
+            setResultHeight(690);
         }
     }
 
@@ -52,6 +55,7 @@ function Homepage() {
         if (location === '') {
             setShowResults(false);
             setMargin(40);
+            setResultHeight(0);
             // AJOUTER UNE ALERTE ICI
             return;
         }
@@ -63,7 +67,16 @@ function Homepage() {
             }
 
             setShowResults(true);
-            setMargin(10);
+            if (showMap) {
+                setMargin(10);
+                setResultHeight(0);
+                setTimeout(() => {
+                    setResultHeight(690);
+                }, 0);
+            } else if (!showMap) {
+                setResultHeight(80);
+            }
+
             setAllInfos(json);
         });
     }
@@ -88,11 +101,13 @@ function Homepage() {
                     </div>
                 )}
             </div>
-            <div className='option-parent'>
-                <FontAwesomeIcon icon={faGear} />
-                <button className='option-btn'><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></button>
-                <button onClick={toggleMap}>X</button>
-            </div>
+            { showResults && (
+                <div className='option-parent'>
+                    <FontAwesomeIcon icon={faGear} />
+                    <button className='option-btn'><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></button>
+                    <button onClick={toggleMap}>X</button>
+                </div>
+            )}
         </div>
     );
 }
