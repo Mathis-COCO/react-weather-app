@@ -29,7 +29,7 @@ function Homepage() {
         },
         results: {
             height: showMap === true ? '690px' : '80px',
-            transition: showMap === true ? 'height 1s ease 1s' : 'none',
+            transition: showMap === true ? 'height 1s ease 1s' : 'height 1s ease 0s',
         },
         map: {
             opacity: showMap === true ? 1 : 0,
