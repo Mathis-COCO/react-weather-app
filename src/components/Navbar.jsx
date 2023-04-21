@@ -8,8 +8,8 @@ import '../css/Navbar.scss';
 import siteLogo from '../img/icon2.png';
 
 function Navbar() {
-    const [coords, setCoords] = useState({latitude: 48.8534, longitude: 2.3488});
-    const [currentPosition, setCurrentPosition] = useState(false);
+    let coords = {latitude: 48.8534, longitude: 2.3488};
+    const [currentPosition, setCurrentPosition] = useState();
     const location = useLocation();
     const styles = {background: location.pathname === '/' ? 'rgba(89, 89, 89, 0.459)' : 'rgb(79, 173, 255)'};
     const navigate = useNavigate();
@@ -21,16 +21,17 @@ function Navbar() {
         getLocation();
     }, []);
 
-    const getLocation = () => {
+    async function getLocation() {
         navigator.geolocation.getCurrentPosition((position) => {
-            setCoords(position.coords);
+            coords = ({latitude: position.coords.latitude, longitude: position.coords.longitude});
             getTemp();
         });
-    };
+    }
 
     const getTemp = () => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=${APIKey}`).then(response => response.json()).then(json => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
             setCurrentPosition(json);
+            console.log(json);
         });
     };
 
@@ -45,8 +46,8 @@ function Navbar() {
                 </div>
                 { currentPosition && (
                     <div className='inline navbar-right'>
-                        <p>{currentPosition.main.temp}</p>
                         <p>{currentPosition.name}</p>
+                        <p>{currentPosition.main.temp}°C</p>
                     </div>
                 )}
             </div>
