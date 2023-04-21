@@ -31,7 +31,6 @@ function Navbar() {
     const getTemp = () => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=${APIKey}`).then(response => response.json()).then(json => {
             setCurrentPosition(json);
-            console.log(currentPosition);
         });
     };
 
