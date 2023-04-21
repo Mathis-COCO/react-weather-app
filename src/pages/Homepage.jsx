@@ -66,6 +66,8 @@ function Homepage() {
                 setShowResults(false);
             }
 
+            console.log(json);
+
             setShowResults(true);
             if (showMap) {
                 setMargin(10);

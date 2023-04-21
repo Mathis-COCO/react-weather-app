@@ -18,7 +18,6 @@ function WeatherMap(props) {
     const mapRef = useRef();
     const {lat, lon, height, width} = props;
     const position = [lat, lon];
-    console.log(height, width);
 
     const styles = {
         mapContainer: {
