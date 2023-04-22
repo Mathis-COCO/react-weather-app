@@ -66,8 +66,6 @@ function Homepage() {
                 setShowResults(false);
             }
 
-            console.log(json);
-
             setShowResults(true);
             if (showMap) {
                 setMargin(10);
@@ -97,7 +95,7 @@ function Homepage() {
                     <div className='results-card' style={styles.results}>
                         <SearchResults {...allInfos.main} />
                         <div className='map-homepage' style={styles.map}>
-                            <WeatherMap lat={allInfos.coord.lat} lon={allInfos.coord.lon} height={600} width={1000} />
+                            <WeatherMap lat={allInfos.coord.lat} lon={allInfos.coord.lon} height={600} width={1000} temp={allInfos.main.temp} city={allInfos.name} />
                         </div>
 
                     </div>

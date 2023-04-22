@@ -42,7 +42,7 @@ function Navbar() {
 
     return (
         <div className='navbar-c-main' style={styles}>
-            <div className='inline'>
+            <div className='inline navbar-height'>
                 <div className='inline navbar-left' onClick={handleClick}>
                     <div className='navbar-c-logo'>
                         <img src={siteLogo} alt='weather-logo' className='navbar-logo' />
@@ -51,8 +51,7 @@ function Navbar() {
                 </div>
                 { currentPosition && (
                     <div className='inline navbar-right'>
-                        <p>{currentPosition.name}</p>
-                        <p>{currentPosition.main.temp}°C</p>
+                        {currentPosition.name} {currentPosition.main.temp}°C
                     </div>
                 )}
             </div>

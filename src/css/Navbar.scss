@@ -39,6 +39,12 @@
     letter-spacing: 2.5px;
     text-transform: lowercase;
     font-size: 26px;
-    margin: 0 40px 0 0;
+    margin: 9px 40px 0 0;
     vertical-align: middle;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-height {
+    height: 56px;
 }
