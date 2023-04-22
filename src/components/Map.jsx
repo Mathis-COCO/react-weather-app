@@ -27,10 +27,9 @@ function WeatherMap(props) {
     const animateRef = useRef(false);
     const mapRef = useRef();
     const {lat, lon, height, width, temp, city} = props;
-    const position = [lat, lon];
-    const [markerPosition, setMarkerPosition] = useState();
-    const [markerCity, setMarkerCity] = useState();
-    const [markerTemp, setMarkerTemp] = useState();
+    const [position, setPosition] = useState([lat, lon]);
+    const [markerCity, setMarkerCity] = useState(city);
+    const [markerTemp, setMarkerTemp] = useState(temp);
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     const styles = {
         mapContainer: {
@@ -41,14 +40,12 @@ function WeatherMap(props) {
 
     function SetViewOnClick({animateRef}) {
         const map = useMapEvent('click', (e) => {
+            setPosition(e.latlng);
             map.setView(e.latlng, map.getZoom(), {
                 animate: animateRef.current || true,
             });
-            // const position = e.latlng;
-            setMarkerPosition(e.latlng);
             getTemp(e.latlng);
         });
-        return null;
     }
 
     const getTemp = (position) => {
@@ -65,19 +62,11 @@ function WeatherMap(props) {
                 <ChangeView center={position} zoom={12} />
                 <Marker position={position}>
                     <Popup>
-                        <p>{city}</p>
-                        <p>{temp} °C</p>
+                        <p>{markerCity}</p>
+                        <p>{markerTemp} °C</p>
                     </Popup>
                 </Marker>
                 <SetViewOnClick animateRef={animateRef} />
-                { markerPosition && (
-                    <Marker position={[markerPosition.lat, markerPosition.lng]} ref={mapRef} >
-                        <Popup>
-                        <p>{markerCity}</p>
-                        <p>{markerTemp} °C</p>
-                        </Popup>
-                    </Marker>
-                )}
             </MapContainer>
         </div>
 
