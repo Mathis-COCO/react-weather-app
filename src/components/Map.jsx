@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
 delete L.Icon.Default.prototype._getIconUrl;
-// const [markerPosition, setMarkerPosition] = useState();
+// const [markerPosition, setMarkerPosition] = useState({latitude: 48.8534, longitude: 2.3488});
 
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -48,6 +48,9 @@ function WeatherMap(props) {
         },
     };
 
+    // temporary marker for test purpose
+    const markerPosition = {latitude: 48.8534, longitude: 2.3488};
+
     return (
         <div className='map-main-container'>
             <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} ref={mapRef} style={styles.mapContainer}>
@@ -59,19 +62,15 @@ function WeatherMap(props) {
                         <p>{temp} °C</p>
                     </Popup>
                 </Marker>
-                {/* { markerPosition && (
-                <Marker
-                position={[markerPosition.latitude, markerPosition.longitude]}
-                ref={mapRef}
-                >
-                    <Popup>
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </Popup>
-                </Marker>
-                )} */}
                 <SetViewOnClick animateRef={animateRef} />
+                { markerPosition && (
+                    <Marker position={[markerPosition.latitude, markerPosition.longitude]} ref={mapRef} >
+                        <Popup>
+                        {/* <p>{markerCity}</p>
+                        <p>{markerTemp} °C</p> */}
+                        </Popup>
+                    </Marker>
+                )}
             </MapContainer>
         </div>
 
