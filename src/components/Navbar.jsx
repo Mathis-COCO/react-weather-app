@@ -23,7 +23,6 @@ function Navbar() {
 
     async function getLocation() {
         navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position);
             coords = ({latitude: position.coords.latitude, longitude: position.coords.longitude});
             getTemp();
         });
@@ -35,7 +34,6 @@ function Navbar() {
             fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
             &units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
                 setCurrentPosition(json);
-                console.log(json);
             });
         });
     };

@@ -4,13 +4,12 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable indent */
 import React, {useRef, useState} from 'react';
-import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent, useMapEvents} from 'react-leaflet';
+import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent} from 'react-leaflet';
 import osm from '../providers/osm-providers';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
 delete L.Icon.Default.prototype._getIconUrl;
-// const [markerPosition, setMarkerPosition] = useState({latitude: 48.8534, longitude: 2.3488});
 
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -24,23 +23,15 @@ function ChangeView({center, zoom}) {
     return null;
 }
 
-function SetViewOnClick({animateRef}) {
-    const map = useMapEvent('click', (e) => {
-        map.setView(e.latlng, map.getZoom(), {
-            animate: animateRef.current || true,
-        });
-        console.log(e.latlng);
-        // setMarkerPosition(e.latlng);
-    });
-
-    return null;
-}
-
 function WeatherMap(props) {
     const animateRef = useRef(false);
     const mapRef = useRef();
     const {lat, lon, height, width, temp, city} = props;
     const position = [lat, lon];
+    const [markerPosition, setMarkerPosition] = useState();
+    const [markerCity, setMarkerCity] = useState();
+    const [markerTemp, setMarkerTemp] = useState();
+    const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     const styles = {
         mapContainer: {
             height,
@@ -48,8 +39,24 @@ function WeatherMap(props) {
         },
     };
 
-    // temporary marker for test purpose
-    const markerPosition = {latitude: 48.8534, longitude: 2.3488};
+    function SetViewOnClick({animateRef}) {
+        const map = useMapEvent('click', (e) => {
+            map.setView(e.latlng, map.getZoom(), {
+                animate: animateRef.current || true,
+            });
+            // const position = e.latlng;
+            setMarkerPosition(e.latlng);
+            getTemp(e.latlng);
+        });
+        return null;
+    }
+
+    const getTemp = (position) => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lng}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
+            setMarkerCity(json.name);
+            setMarkerTemp(json.main.temp);
+        });
+    };
 
     return (
         <div className='map-main-container'>
@@ -64,10 +71,10 @@ function WeatherMap(props) {
                 </Marker>
                 <SetViewOnClick animateRef={animateRef} />
                 { markerPosition && (
-                    <Marker position={[markerPosition.latitude, markerPosition.longitude]} ref={mapRef} >
+                    <Marker position={[markerPosition.lat, markerPosition.lng]} ref={mapRef} >
                         <Popup>
-                        {/* <p>{markerCity}</p>
-                        <p>{markerTemp} °C</p> */}
+                        <p>{markerCity}</p>
+                        <p>{markerTemp} °C</p>
                         </Popup>
                     </Marker>
                 )}
