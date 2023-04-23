@@ -27,7 +27,7 @@ function WeatherMap(props) {
     const [markerInfos, setMarkerInfos] = useState({
         name: city,
         main: {temp:temp},
-        weather: [{main:'Clear'}],
+        weather: [{main:'Clear', icon: '04n'}],
     });
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     const styles = {
