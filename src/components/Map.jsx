@@ -5,7 +5,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-parens */
 /* eslint-disable indent */
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent} from 'react-leaflet';
 import osm from '../providers/osm-providers';
 import 'leaflet/dist/leaflet.css';
@@ -24,7 +24,7 @@ function WeatherMap(props) {
     const animateRef = useRef();
     const {lat, lon, height, width, temp, city} = props;
     const [position, setPosition] = useState([lat, lon]); // le state s'actualise pas quand je passe de nouvelles coordonnées en props
-    const [markerInfos, setMarkerInfos] = useState({
+    const [markerInfos, setMarkerInfos] = useState({ // il faudrait que je fasse un setPosition([lat, lon]) quelque part pour actualiser en fonction des résultats de la searchbar
         name: city,
         main:{temp:temp},
         weather:[{main:'Clear'}],
@@ -36,6 +36,10 @@ function WeatherMap(props) {
             width,
         },
     };
+
+    useEffect(() => {
+        setPosition([lat, lon]);
+      }, [lat, lon]);
 
     function ChangeView() {
         const map = useMap();
