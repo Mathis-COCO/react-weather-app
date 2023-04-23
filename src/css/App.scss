@@ -38,9 +38,7 @@
   letter-spacing: 1.5px;
 }
 
-.searchbar > input:focus{
-  outline: none;
-}
+.searchbar > input:focus{outline: none;}
 
 .searchbar > input::placeholder {
   color: rgb(255, 255, 255);
@@ -49,9 +47,7 @@
   letter-spacing: 3px;
 }
 
-.searchbar > div {
-  cursor: pointer;
-}
+.searchbar > div {cursor: pointer;}
 
 .searchbar > div > button {
   margin: 7px 20px 0 auto;
@@ -79,12 +75,10 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid rgb(255, 255, 255);
 }
 
-.option-btn-container {
-  background-color: red;
-}
+.option-btn-container {background-color: red;}
 
 .option-parent {
   background-color: rgba(89, 89, 89, 0.459);
@@ -107,11 +101,9 @@
     background-color: transparent;
 }
 
-.option-parent:hover .option-btn {
-    opacity: 1;
-}
+.option-parent:hover > button{ opacity: 1; }
 
-.option-btn {
+.option-parent > button {
   background-color: rgba(89, 89, 89, 0.459);
   border-radius: 100px;
   border: 1px solid rgba(255, 255, 255, 1);

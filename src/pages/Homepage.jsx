@@ -103,9 +103,9 @@ function Homepage() {
             </div>
             { showResults && (
                 <div className='option-parent'>
-                    <FontAwesomeIcon icon={faGear} />
-                    <button className='option-btn'><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></button>
-                    <button onClick={toggleMap}>X</button>
+                    <FontAwesomeIcon icon={faGear} className='option-sub-btn' />
+                    <button className='option-sub-btn'><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></button>
+                    <button className='option-sub-btn' onClick={toggleMap}>X</button>
                 </div>
             )}
         </div>
