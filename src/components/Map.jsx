@@ -23,11 +23,11 @@ L.Icon.Default.mergeOptions({
 function WeatherMap(props) {
     const animateRef = useRef();
     const {lat, lon, height, width, temp, city} = props;
-    const [position, setPosition] = useState([lat, lon]); // le state s'actualise pas quand je passe de nouvelles coordonnées en props
-    const [markerInfos, setMarkerInfos] = useState({ // il faudrait que je fasse un setPosition([lat, lon]) quelque part pour actualiser en fonction des résultats de la searchbar
+    const [position, setPosition] = useState({lat: lat, lng: lon});
+    const [markerInfos, setMarkerInfos] = useState({
         name: city,
-        main:{temp:temp},
-        weather:[{main:'Clear'}],
+        main: {temp:temp},
+        weather: [{main:'Clear'}],
     });
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     const styles = {
@@ -38,7 +38,8 @@ function WeatherMap(props) {
     };
 
     useEffect(() => {
-        setPosition([lat, lon]);
+        setPosition({lat: lat, lng: lon});
+        getTemp({lat: lat, lng: lon});
       }, [lat, lon]);
 
     function ChangeView() {
