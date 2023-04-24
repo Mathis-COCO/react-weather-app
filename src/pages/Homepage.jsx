@@ -97,7 +97,6 @@ function Homepage() {
                         <div className='map-homepage' style={styles.map}>
                             <WeatherMap lat={allInfos.coord.lat} lon={allInfos.coord.lon} height={600} width={1000} temp={allInfos.main.temp} city={allInfos.name} />
                         </div>
-
                     </div>
                 )}
             </div>

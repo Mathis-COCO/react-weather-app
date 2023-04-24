@@ -4,6 +4,7 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable indent */
 import React, {useEffect, useState} from 'react';
+import CrossfadeImage from 'react-crossfade-image';
 import '../css/WeatherLogos.scss';
 
 function WeatherLogos(props) {
@@ -18,7 +19,6 @@ function WeatherLogos(props) {
       setImg(imageObjectURL);
     };
 
-    // ADD TRANSITIONS WHEN ICON CHANGES
     useEffect(() => {
       fetchImage();
     }, [props]);
@@ -27,7 +27,7 @@ function WeatherLogos(props) {
         <div>
             <div className='weather-logo-main'>
                 { img && (
-                    <img src={img} alt='Weather Logo' />
+                    <CrossfadeImage src={img} />
                 )}
             </div>
         </div>
