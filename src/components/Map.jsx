@@ -5,12 +5,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-parens */
 /* eslint-disable indent */
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent} from 'react-leaflet';
 import osm from '../providers/osm-providers';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import WeatherLogos from './WeatherLogos';
+import WeatherProvider, {WeatherContext} from '../providers/weather-provider';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -24,11 +24,8 @@ function WeatherMap(props) {
     const animateRef = useRef();
     const {lat, lon, height, width, temp, city} = props;
     const [position, setPosition] = useState({lat: lat, lng: lon});
-    const [markerInfos, setMarkerInfos] = useState({
-        name: city,
-        main: {temp:temp},
-        weather: [{main:'Clear', icon: '04n'}],
-    });
+    const [weatherInfos, setWeatherInfos] = useContext(WeatherContext);
+    console.log(weatherInfos);
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     const styles = {
         mapContainer: {
@@ -37,14 +34,18 @@ function WeatherMap(props) {
         },
     };
 
+    function updateMarkerInfos(newMarkerInfos) {
+        setWeatherInfos(newMarkerInfos);
+    }
+
     useEffect(() => {
         setPosition({lat: lat, lng: lon});
         getTemp({lat: lat, lng: lon});
-      }, [lat, lon]);
+    }, [lat, lon]);
 
     function ChangeView() {
         const map = useMap();
-        map.setView(position, 12);
+        map.flyTo([position.lat, position.lng], 12);
         return null;
     }
 
@@ -60,24 +61,26 @@ function WeatherMap(props) {
 
     const getTemp = (position) => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lng}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
-            setMarkerInfos(json);
+            setWeatherInfos(json);
+            updateMarkerInfos(json);
         });
     };
 
     return (
         <div className='map-main-container'>
-            <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={styles.mapContainer}>
-                <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
-                <ChangeView zoom={12} />
-                <Marker position={position}>
-                    <Popup>
-                        <p>{markerInfos.name}</p>
-                        <p>{markerInfos.main.temp} °C</p>
-                    </Popup>
-                </Marker>
-                <SetViewOnClick animateRef={animateRef} />
-            </MapContainer>
-            <WeatherLogos weatherType={markerInfos}></WeatherLogos>
+            <WeatherProvider>
+                <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={styles.mapContainer}>
+                    <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
+                    <ChangeView zoom={12} />
+                    <Marker position={position}>
+                        <Popup>
+                            <p>{weatherInfos.name}</p>
+                            <p>{weatherInfos.main.temp} °C</p>
+                        </Popup>
+                    </Marker>
+                    <SetViewOnClick animateRef={animateRef} />
+                </MapContainer>
+            </WeatherProvider>
         </div>
 
     );

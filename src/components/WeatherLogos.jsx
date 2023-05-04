@@ -3,13 +3,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-parens */
 /* eslint-disable indent */
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import CrossfadeImage from 'react-crossfade-image';
 import '../css/WeatherLogos.scss';
+import {WeatherContext} from '../providers/weather-provider';
 
 function WeatherLogos(props) {
-    const {weatherType} = props;
-    const imageUrl = `https://openweathermap.org/img/wn/${weatherType.weather[0].icon}@2x.png`;
+    const weatherInfos = useContext(WeatherContext);
+    const imageUrl = `https://openweathermap.org/img/wn/${weatherInfos[0].weather[0].icon}@2x.png`;
     const [img, setImg] = useState();
 
     const fetchImage = async () => {
@@ -27,7 +28,7 @@ function WeatherLogos(props) {
         <div>
             <div className='weather-logo-main'>
                 { img && (
-                    <CrossfadeImage src={img} />
+                    <CrossfadeImage src={img} duration={3000} />
                 )}
             </div>
         </div>

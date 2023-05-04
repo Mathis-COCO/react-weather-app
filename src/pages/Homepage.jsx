@@ -46,7 +46,7 @@ function Homepage() {
         } else {
             setShowMap(true);
             setMargin(10);
-            setResultHeight(790);
+            setResultHeight(690);
         }
     }
 
@@ -71,7 +71,7 @@ function Homepage() {
                 setMargin(10);
                 setResultHeight(0);
                 setTimeout(() => {
-                    setResultHeight(790);
+                    setResultHeight(690);
                 }, 0);
             } else if (!showMap) {
                 setResultHeight(80);
