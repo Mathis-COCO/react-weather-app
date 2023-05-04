@@ -8,8 +8,12 @@ export const WeatherContext = createContext([{weather: [{main: 'Clear', icon: '0
 const WeatherProvider = props => {
     const [weatherInfos, setWeatherInfos] = useState(false);
 
+    function updateWeather(weather) {
+        setWeatherInfos(weather);
+    }
+
     return (
-        <WeatherContext.Provider value={[weatherInfos, setWeatherInfos]}>
+        <WeatherContext.Provider value={[weatherInfos, updateWeather]}>
             {props.children}
         </ WeatherContext.Provider>
     );

@@ -24,8 +24,7 @@ function WeatherMap(props) {
     const animateRef = useRef();
     const {lat, lon, height, width, temp, city} = props;
     const [position, setPosition] = useState({lat: lat, lng: lon});
-    const [weatherInfos, setWeatherInfos] = useContext(WeatherContext);
-    console.log(weatherInfos);
+    const [weatherInfos, updateWeather] = useContext(WeatherContext);
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     const styles = {
         mapContainer: {
@@ -33,10 +32,6 @@ function WeatherMap(props) {
             width,
         },
     };
-
-    function updateMarkerInfos(newMarkerInfos) {
-        setWeatherInfos(newMarkerInfos);
-    }
 
     useEffect(() => {
         setPosition({lat: lat, lng: lon});
@@ -61,26 +56,23 @@ function WeatherMap(props) {
 
     const getTemp = (position) => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lng}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
-            setWeatherInfos(json);
-            updateMarkerInfos(json);
+            updateWeather(json);
         });
     };
 
     return (
         <div className='map-main-container'>
-            <WeatherProvider>
-                <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={styles.mapContainer}>
-                    <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
-                    <ChangeView zoom={12} />
-                    <Marker position={position}>
-                        <Popup>
-                            <p>{weatherInfos.name}</p>
-                            <p>{weatherInfos.main.temp} °C</p>
-                        </Popup>
-                    </Marker>
-                    <SetViewOnClick animateRef={animateRef} />
-                </MapContainer>
-            </WeatherProvider>
+            <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={styles.mapContainer}>
+                <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
+                <ChangeView zoom={12} />
+                <Marker position={position}>
+                    <Popup>
+                        <p>{weatherInfos.name}</p>
+                        <p>{weatherInfos.main.temp} °C</p>
+                    </Popup>
+                </Marker>
+                <SetViewOnClick animateRef={animateRef} />
+            </MapContainer>
         </div>
 
     );

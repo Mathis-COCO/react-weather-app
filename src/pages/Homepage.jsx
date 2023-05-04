@@ -1,7 +1,7 @@
 /* eslint-disable capitalized-comments */
 /* eslint-disable no-unused-vars */
 /* eslint-disable indent */
-import {React, useState} from 'react';
+import {React, useContext, useState} from 'react';
 import '../css/App.scss';
 import {FiSearch} from 'react-icons/fi';
 import SearchResults from '../components/SearchResults';
@@ -9,14 +9,15 @@ import WeatherMap from '../components/Map.jsx';
 import Navbar from '../components/Navbar';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear, faUpRightAndDownLeftFromCenter} from '@fortawesome/free-solid-svg-icons';
+import WeatherProvider, {WeatherContext} from '../providers/weather-provider';
 
-function Homepage() {
+export default function Homepage() {
     const [location, setLocation] = useState('');
-    const [allInfos, setAllInfos] = useState('');
     const [showResults, setShowResults] = useState(false);
     const [margin, setMargin] = useState(40);
     const [showMap, setShowMap] = useState(true);
     const [resultHeight, setResultHeight] = useState(0);
+    const [weatherInfos, updateWeather] = useContext(WeatherContext);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
 
     const updateLoc = event => {
@@ -77,7 +78,7 @@ function Homepage() {
                 setResultHeight(80);
             }
 
-            setAllInfos(json);
+            updateWeather(json);
         });
     }
 
@@ -93,9 +94,9 @@ function Homepage() {
                 </form>
                 { showResults && (
                     <div className='results-card' style={styles.results}>
-                        <SearchResults {...allInfos.main} />
+                        <SearchResults {...weatherInfos.main} />
                         <div className='map-homepage' style={styles.map}>
-                            <WeatherMap lat={allInfos.coord.lat} lon={allInfos.coord.lon} height={600} width={1000} temp={allInfos.main.temp} city={allInfos.name} />
+                            <WeatherMap lat={weatherInfos.coord.lat} lon={weatherInfos.coord.lon} height={600} width={1000} temp={weatherInfos.main.temp} city={weatherInfos.name} />
                         </div>
                     </div>
                 )}
@@ -110,5 +111,3 @@ function Homepage() {
         </div>
     );
 }
-
-export default Homepage;
