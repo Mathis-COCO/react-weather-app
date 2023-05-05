@@ -9,7 +9,7 @@ import WeatherMap from '../components/Map.jsx';
 import Navbar from '../components/Navbar';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear, faUpRightAndDownLeftFromCenter} from '@fortawesome/free-solid-svg-icons';
-import WeatherProvider, {WeatherContext} from '../providers/weather-provider';
+import {WeatherContext} from '../providers/weather-provider';
 
 export default function Homepage() {
     const [location, setLocation] = useState('');
