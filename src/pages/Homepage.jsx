@@ -57,7 +57,6 @@ export default function Homepage() {
             setShowResults(false);
             setMargin(40);
             setResultHeight(0);
-            // AJOUTER UNE ALERTE ICI
             return;
         }
 
@@ -94,9 +93,9 @@ export default function Homepage() {
                 </form>
                 { showResults && (
                     <div className='results-card' style={styles.results}>
-                        <SearchResults {...weatherInfos.main} />
+                        <SearchResults />
                         <div className='map-homepage' style={styles.map}>
-                            <WeatherMap lat={weatherInfos.coord.lat} lon={weatherInfos.coord.lon} height={600} width={1000} temp={weatherInfos.main.temp} city={weatherInfos.name} />
+                            <WeatherMap />
                         </div>
                     </div>
                 )}

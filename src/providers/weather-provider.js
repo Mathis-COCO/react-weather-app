@@ -3,7 +3,7 @@
 /* eslint-disable indent */
 import React, {createContext, useState} from 'react';
 
-export const WeatherContext = createContext([{weather: [{main: 'Clear', icon: '04n'}], main: {temp: 25}}]); // Stocker tout le json
+export const WeatherContext = createContext({}); // Stocker tout le json contenant la data de meteo
 
 const WeatherProvider = props => {
     const [weatherInfos, setWeatherInfos] = useState(false);

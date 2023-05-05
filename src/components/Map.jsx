@@ -10,7 +10,7 @@ import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent} from 'react
 import osm from '../providers/osm-providers';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import WeatherProvider, {WeatherContext} from '../providers/weather-provider';
+import {WeatherContext} from '../providers/weather-provider';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -20,23 +20,16 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-function WeatherMap(props) {
+function WeatherMap() {
     const animateRef = useRef();
-    const {lat, lon, height, width, temp, city} = props;
-    const [position, setPosition] = useState({lat: lat, lng: lon});
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
+    const [position, setPosition] = useState({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
-    const styles = {
-        mapContainer: {
-            height,
-            width,
-        },
-    };
 
     useEffect(() => {
-        setPosition({lat: lat, lng: lon});
-        getTemp({lat: lat, lng: lon});
-    }, [lat, lon]);
+        setPosition({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
+        getTemp({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
+    }, [weatherInfos.coord.lat, weatherInfos.coord.lon]);
 
     function ChangeView() {
         const map = useMap();
@@ -49,6 +42,9 @@ function WeatherMap(props) {
             map.setView(e.latlng, map.getZoom(), {
                 animate: animateRef.current || true,
             });
+            console.log(e.latlng.lng);
+            // updateWeather({coord: {lat: e.latlng.lat, lon: e.latlng.lng}});
+            console.log(weatherInfos);
             setPosition(e.latlng);
             getTemp(e.latlng);
         });
@@ -62,7 +58,7 @@ function WeatherMap(props) {
 
     return (
         <div className='map-main-container'>
-            <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={styles.mapContainer}>
+            <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={{height:600, width:1000}}>
                 <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
                 <ChangeView zoom={12} />
                 <Marker position={position}>
