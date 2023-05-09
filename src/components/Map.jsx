@@ -20,11 +20,18 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-function WeatherMap() {
+function WeatherMap(props) {
     const animateRef = useRef();
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
+    const {height, width} = props;
     const [position, setPosition] = useState({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
+    const styles = {
+        mapContainer: {
+            height,
+            width,
+        },
+    };
 
     useEffect(() => {
         setPosition({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
@@ -42,9 +49,6 @@ function WeatherMap() {
             map.setView(e.latlng, map.getZoom(), {
                 animate: animateRef.current || true,
             });
-            console.log(e.latlng.lng);
-            // updateWeather({coord: {lat: e.latlng.lat, lon: e.latlng.lng}});
-            console.log(weatherInfos);
             setPosition(e.latlng);
             getTemp(e.latlng);
         });
@@ -58,7 +62,7 @@ function WeatherMap() {
 
     return (
         <div className='map-main-container'>
-            <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={{height:600, width:1000}}>
+            <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={styles.mapContainer}>
                 <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
                 <ChangeView zoom={12} />
                 <Marker position={position}>

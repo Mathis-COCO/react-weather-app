@@ -3,7 +3,7 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable indent */
 import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import '../css/Navbar.scss';
 import siteLogo from '../img/icon2.png';
 
@@ -41,19 +41,18 @@ function Navbar() {
     return (
         <div className='navbar-c-main' style={styles}>
             <div className='inline navbar-height'>
-                <div className='inline navbar-left' onClick={handleClick}>
+                <Link to={'/'} className='inline navbar-left' onClick={handleClick}>
                     <div className='navbar-c-logo'>
                         <img src={siteLogo} alt='weather-logo' className='navbar-logo' />
                     </div>
                     <p className='navbar-title'>Weather App</p>
-                </div>
+                </Link>
                 { currentPosition && (
                     <div className='inline navbar-right'>
                         {currentPosition.name} {currentPosition.main.temp}°C
                     </div>
                 )}
             </div>
-
         </div>
   );
 }

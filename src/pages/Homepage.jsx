@@ -10,6 +10,8 @@ import Navbar from '../components/Navbar';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear, faUpRightAndDownLeftFromCenter} from '@fortawesome/free-solid-svg-icons';
 import {WeatherContext} from '../providers/weather-provider';
+import WeatherBar from '../components/WeatherBar';
+import {Link} from 'react-router-dom';
 
 export default function Homepage() {
     const [location, setLocation] = useState('');
@@ -18,7 +20,10 @@ export default function Homepage() {
     const [showMap, setShowMap] = useState(true);
     const [resultHeight, setResultHeight] = useState(0);
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
+    const [barHeight, setBarHeight] = useState(0);
+    const [showBar, setShowBar] = useState(false);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
+    let cityHistory = [];
 
     const updateLoc = event => {
         setLocation(event.target.value);
@@ -33,6 +38,10 @@ export default function Homepage() {
             height: `${resultHeight}px`,
             transition: showMap ? 'height 1s ease 1s' : 'height 1s ease 0s',
         },
+        leftbar: {
+            height: `${barHeight}px`,
+            transition: showBar ? 'height 1s ease 1s' : 'height 1s ease 0s',
+        },
         map: {
             opacity: showMap ? 1 : 0,
             transition: showMap ? 'opacity 1s ease 1s' : 'opacity 1s ease 0s',
@@ -42,12 +51,26 @@ export default function Homepage() {
     function toggleMap() {
         if (showMap) {
             setShowMap(false);
+            setBarHeight(0);
             setMargin(40);
             setResultHeight(80);
         } else {
             setShowMap(true);
             setMargin(10);
             setResultHeight(690);
+            setBarHeight(700);
+        }
+    }
+
+    function toggleBar() {
+        if (showBar) {
+            setShowBar(false);
+            setBarHeight(0);
+            console.log(barHeight);
+        } else {
+            setShowBar(true);
+            setBarHeight(700);
+            console.log(barHeight);
         }
     }
 
@@ -72,6 +95,7 @@ export default function Homepage() {
                 setResultHeight(0);
                 setTimeout(() => {
                     setResultHeight(690);
+                    setBarHeight(700);
                 }, 0);
             } else if (!showMap) {
                 setResultHeight(80);
@@ -79,6 +103,10 @@ export default function Homepage() {
 
             updateWeather(json);
         });
+        cityHistory = localStorage.getItem('cities');
+        cityHistory.concat(location);
+        localStorage.setItem('cities', JSON.stringify(`${location}`));
+        console.log(cityHistory);
     }
 
     return (
@@ -92,10 +120,15 @@ export default function Homepage() {
                     </div>
                 </form>
                 { showResults && (
-                    <div className='results-card' style={styles.results}>
-                        <SearchResults />
-                        <div className='map-homepage' style={styles.map}>
-                            <WeatherMap />
+                    <div className='result-container'>
+                        <div style={styles.leftbar} className='left-bar' >
+                            <WeatherBar />
+                        </div>
+                        <div className='results-card' style={styles.results}>
+                            <SearchResults />
+                            <div className='map-homepage' style={styles.map}>
+                                <WeatherMap height={600} width={1000} />
+                            </div>
                         </div>
                     </div>
                 )}
@@ -103,7 +136,8 @@ export default function Homepage() {
             { showResults && (
                 <div className='option-parent'>
                     <FontAwesomeIcon icon={faGear} className='option-sub-btn' />
-                    <button className='option-sub-btn'><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></button>
+                    <button onClick={toggleBar}>+</button>
+                    <button><Link to={'/map'} className='option-sub-btn'><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></Link></button>
                     <button className='option-sub-btn' onClick={toggleMap}>X</button>
                 </div>
             )}

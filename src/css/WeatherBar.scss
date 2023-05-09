@@ -1,0 +1,14 @@
+.weather-bar-main {
+    width: 400px;
+    align-self: flex-start;
+    overflow: hidden;
+    height: 690px;
+  
+    // glass background effect
+    background: rgba(255, 255, 255, 0.385);
+    border-radius: 0 16px 16px 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.8px);
+    -webkit-backdrop-filter: blur(8.8px);
+    border: 1px solid rgb(255, 255, 255);
+}

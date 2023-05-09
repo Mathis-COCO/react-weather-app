@@ -11,8 +11,6 @@ function Fullmap() {
         <div className='main-div'>
             <Navbar />
             <WeatherMap
-            lat={43.3}
-            lon={0.65}
             height={windowSize.current[1] - 56}
             width={windowSize.current[0]}
             />

@@ -10,6 +10,7 @@ import {WeatherContext} from '../providers/weather-provider';
 
 function WeatherLogos(props) {
     const weatherInfos = useContext(WeatherContext);
+    // console.log(weatherInfos[0].weather[0]);
     const imageUrl = `https://openweathermap.org/img/wn/${weatherInfos[0].weather[0].icon}@2x.png`;
     const [img, setImg] = useState();
 

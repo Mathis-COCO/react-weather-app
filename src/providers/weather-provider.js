@@ -1,3 +1,4 @@
+/* eslint-disable capitalized-comments */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable indent */
@@ -9,6 +10,8 @@ const WeatherProvider = props => {
     const [weatherInfos, setWeatherInfos] = useState(false);
 
     function updateWeather(weather) {
+        // localStorage.setItem('weather', 'AAAAAAAAAAAAAA');
+        // console.log(localStorage.getItem('weather'));
         setWeatherInfos(weather);
     }
 
