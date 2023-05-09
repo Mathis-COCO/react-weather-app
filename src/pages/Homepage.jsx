@@ -20,7 +20,6 @@ export default function Homepage() {
     const [showMap, setShowMap] = useState(true);
     const [resultHeight, setResultHeight] = useState(0);
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
-    const [barHeight, setBarHeight] = useState(0);
     const [showBar, setShowBar] = useState(false);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
     let cityHistory = [];
@@ -39,8 +38,8 @@ export default function Homepage() {
             transition: showMap ? 'height 1s ease 1s' : 'height 1s ease 0s',
         },
         leftbar: {
-            height: `${barHeight}px`,
-            transition: showBar ? 'height 1s ease 1s' : 'height 1s ease 0s',
+            opacity: showBar ? 1 : 0,
+            transition: showBar ? 'opacity 1s ease 1s' : 'opacity 1s ease 0s',
         },
         map: {
             opacity: showMap ? 1 : 0,
@@ -51,26 +50,22 @@ export default function Homepage() {
     function toggleMap() {
         if (showMap) {
             setShowMap(false);
-            setBarHeight(0);
+            setShowBar(false);
             setMargin(40);
             setResultHeight(80);
         } else {
             setShowMap(true);
             setMargin(10);
             setResultHeight(690);
-            setBarHeight(700);
+            setShowBar(true);
         }
     }
 
     function toggleBar() {
         if (showBar) {
             setShowBar(false);
-            setBarHeight(0);
-            console.log(barHeight);
         } else {
             setShowBar(true);
-            setBarHeight(700);
-            console.log(barHeight);
         }
     }
 
@@ -95,7 +90,7 @@ export default function Homepage() {
                 setResultHeight(0);
                 setTimeout(() => {
                     setResultHeight(690);
-                    setBarHeight(700);
+                    setShowBar(true);
                 }, 0);
             } else if (!showMap) {
                 setResultHeight(80);
