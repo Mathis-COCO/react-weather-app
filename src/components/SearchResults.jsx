@@ -7,14 +7,14 @@ import '../css/SearchResults.scss';
 import WeatherLogos from './WeatherLogos';
 import {WeatherContext} from '../providers/weather-provider';
 
-function SearchResults() {
+function SearchResults(props) {
+    const showBar = props;
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
     return (
         <div className='space-evenly'>
             <div>
                 <p className='p-temperature'>{weatherInfos.main.temp + '°C'}</p>
             </div>
-            <WeatherLogos></WeatherLogos>
             <div>
                 <p className='p-humidity'>{weatherInfos.main.humidity + '%'}</p>
             </div>

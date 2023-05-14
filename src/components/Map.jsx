@@ -22,7 +22,7 @@ L.Icon.Default.mergeOptions({
 
 function WeatherMap(props) {
     const animateRef = useRef();
-    const [weatherInfos, updateWeather] = useContext(WeatherContext);
+    const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
     const {height, width} = props;
     const [position, setPosition] = useState({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
@@ -55,8 +55,11 @@ function WeatherMap(props) {
     }
 
     const getTemp = (position) => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lng}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
-            updateWeather(json);
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lng}&units=metric&appid=${APIKey}`).then(response => response.json()).then(weather => {
+            updateWeather(weather);
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(forecastWeather => {
+                updateGraph(forecastWeather);
+            });
         });
     };
 

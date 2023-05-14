@@ -8,6 +8,7 @@ export const WeatherContext = createContext({}); // Stocker tout le json contena
 
 const WeatherProvider = props => {
     const [weatherInfos, setWeatherInfos] = useState(false);
+    const [graphInfos, setGraphInfos] = useState(false);
 
     function updateWeather(weather) {
         // localStorage.setItem('weather', 'AAAAAAAAAAAAAA');
@@ -15,8 +16,19 @@ const WeatherProvider = props => {
         setWeatherInfos(weather);
     }
 
+    function updateGraph(futureWeather) {
+            setGraphInfos(futureWeather);
+    }
+
+    const contextValues = [
+        weatherInfos,
+        updateWeather,
+        graphInfos,
+        updateGraph,
+    ];
+
     return (
-        <WeatherContext.Provider value={[weatherInfos, updateWeather]}>
+        <WeatherContext.Provider value={contextValues}>
             {props.children}
         </ WeatherContext.Provider>
     );

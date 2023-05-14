@@ -7,14 +7,15 @@ import React, {useContext, useEffect, useState} from 'react';
 import '../css/WeatherBar.scss';
 import {WeatherContext} from '../providers/weather-provider';
 import WeatherLogos from './WeatherLogos';
+import Graph from './Graphs';
 
 function WeatherBar() {
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
-    const [background, setBackground] = useState('rgb(79, 173, 255)');
+    const [background, setBackground] = useState('rgba(255, 255, 255, 0.385)');
     // console.log(weatherInfos.weather[0].main);
     const styles = {
         weatherbar: {
-            backgroundColor: {background},
+            backgroundColor: background,
         },
     };
 
@@ -28,12 +29,15 @@ function WeatherBar() {
                 setBackground('rgb(79, 173, 255)');
                 break;
             case 'Drizzle':
-                setBackground('');
+            case 'Rain ':
+                setBackground('rgba(255, 255, 255, 0.385)');
                 break;
             default:
                 break;
         }
     }
+
+    // console.log(styles.weatherbar);
 
     return (
         <div className='weather-bar-main' style={styles.weatherbar}>
@@ -43,6 +47,9 @@ function WeatherBar() {
             </div>
             <div>
                 <p>{weatherInfos.main.feels_like}</p>
+            </div>
+            <div>
+                <Graph />
             </div>
         </div>
     );

@@ -19,10 +19,11 @@ export default function Homepage() {
     const [margin, setMargin] = useState(40);
     const [showMap, setShowMap] = useState(true);
     const [resultHeight, setResultHeight] = useState(0);
-    const [weatherInfos, updateWeather] = useContext(WeatherContext);
+    const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
     const [showBar, setShowBar] = useState(false);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
-    let cityHistory = [];
+    let foreWeather = null;
+    // let cityHistory = [];
 
     const updateLoc = event => {
         setLocation(event.target.value);
@@ -79,29 +80,34 @@ export default function Homepage() {
         }
 
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
-        &units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
-            if (json.cod === '404') {
+        &units=metric&appid=${APIKey}`).then(response => response.json()).then(weather => {
+            if (weather.cod === '404') {
                 setShowResults(false);
             }
 
-            setShowResults(true);
-            if (showMap) {
-                setMargin(10);
-                setResultHeight(0);
-                setTimeout(() => {
-                    setResultHeight(690);
-                    setShowBar(true);
-                }, 0);
-            } else if (!showMap) {
-                setResultHeight(80);
-            }
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(forecastWeather => {
+                foreWeather = forecastWeather;
+                setShowResults(true);
+                if (showMap) {
+                    setMargin(10);
+                    setResultHeight(0);
+                    setTimeout(() => {
+                        setResultHeight(690);
+                        setShowBar(true);
+                    }, 0);
+                } else if (!showMap) {
+                    setResultHeight(80);
+                }
 
-            updateWeather(json);
+                updateGraph(foreWeather);
+                updateWeather(weather);
+            });
         });
-        cityHistory = localStorage.getItem('cities');
-        cityHistory.concat(location);
-        localStorage.setItem('cities', JSON.stringify(`${location}`));
-        console.log(cityHistory);
+
+        // cityHistory = localStorage.getItem('cities');
+        // cityHistory.concat(location);
+        // localStorage.setItem('cities', JSON.stringify(`${location}`));
+        // console.log(cityHistory);
     }
 
     return (
@@ -120,7 +126,7 @@ export default function Homepage() {
                             <WeatherBar />
                         </div>
                         <div className='results-card' style={styles.results}>
-                            <SearchResults />
+                            <SearchResults showBar={showBar} />
                             <div className='map-homepage' style={styles.map}>
                                 <WeatherMap height={600} width={1000} />
                             </div>
