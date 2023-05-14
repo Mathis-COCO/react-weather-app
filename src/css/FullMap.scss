@@ -1,0 +1,18 @@
+.weatherbar-container {
+    position: absolute;
+    z-index: 10;
+    margin-top: 56px;
+    width: 24vw;
+    height: calc(100vh - 50px);
+}
+
+.fullmap-container {
+    position: absolute;
+    z-index: 1;
+}
+
+.weather-bar-main {
+    border: solid transparent;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 0);
+}

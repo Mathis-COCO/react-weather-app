@@ -22,7 +22,8 @@ ChartJS.register(
     PointElement,
 );
 
-function Graph() {
+function Graph(props) {
+    const {type} = props;
     const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
     const dateValues = graphInfos.list.map((item) => {
         const date = new Date(item.dt_txt);
@@ -32,6 +33,7 @@ function Graph() {
         return `${month}-${day} ${hours}h`;
     });
     const tempValues = graphInfos.list.map((item) => item.main.temp);
+    const windValues = graphInfos.list.map((item) => item.wind.speed);
     console.log(graphInfos);
     const data = {
         labels: dateValues,
@@ -49,10 +51,26 @@ function Graph() {
         },
     };
 
+    const data2 = {
+        labels: dateValues,
+        datasets: [{
+            data: windValues,
+            backgroundColor: 'lightBlue',
+            borderColor: 'lightBlue',
+            borderWidth: '2',
+        }],
+    };
+    console.log(windValues);
+
     return (
         <div>
             <div className='graph-main'>
-                <Line data={data} options={options}></Line>
+                {type === 'temp'
+                    && <Line data={data} options={options}></Line>
+                }
+                {type === 'climat'
+                    && <Line data={data2} options={options}></Line>
+                }
             </div>
         </div>
   );

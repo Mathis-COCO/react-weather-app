@@ -41,6 +41,11 @@ export default function Homepage() {
         leftbar: {
             opacity: showBar ? 1 : 0,
             transition: showBar ? 'opacity 1s ease 1s' : 'opacity 1s ease 0s',
+            height: '690px',
+            width: '400px',
+            backgroundColor: 'rgba(255, 255, 255, 0.385)',
+            borderRadius: '0 25px 25px 0',
+            border: 'solid white 1px',
         },
         map: {
             opacity: showMap ? 1 : 0,

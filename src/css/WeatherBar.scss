@@ -1,8 +1,8 @@
 .weather-bar-main {
-    width: 400px;
+    width: 100%;
     align-self: flex-start;
     overflow: hidden;
-    height: 690px;
+    height: 100%;
   
     // glass background effect
     background: rgba(255, 255, 255, 0.385);
@@ -11,4 +11,30 @@
     backdrop-filter: blur(8.8px);
     -webkit-backdrop-filter: blur(8.8px);
     border: 1px solid rgb(255, 255, 255);
+}
+
+.graph-container {
+    margin: 25px;
+    width: 90%;
+    height: auto;
+}
+
+.logos-container {
+    background-color: white;
+    border-radius: 25px;
+    height: 100px;
+    width: 100px;
+}
+
+.current-temp-container {
+    background-color: white;
+    height: 100px;
+    width: auto;
+    font-size: 35px;
+    font-family: Arial;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    padding: 0 20px 0 20px;
+    border-radius: 25px;
+    font-weight: 6s00;
 }
