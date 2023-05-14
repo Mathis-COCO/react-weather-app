@@ -7,14 +7,13 @@ import {FiSearch} from 'react-icons/fi';
 import {WeatherContext} from '../providers/weather-provider';
 
 export default function SearchBar() {
-    const [location, setLocation] = useState('');
-    const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
+    const [userLocation, setUserLocation] = useState('');
+    const [weatherInfos, updateWeather, graphInfos, updateGraph, location, setLocation] = useContext(WeatherContext);
     const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
-    let foreWeather = null;
-    let cityHistory = [];
+    // let cityHistory = [];
 
     const updateLoc = event => {
-        setLocation(event.target.value);
+        setUserLocation(event.target.value);
     };
 
     function apiLocation(event) {
@@ -23,23 +22,11 @@ export default function SearchBar() {
             return;
         }
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
-        &units=metric&appid=${APIKey}`).then(response => response.json()).then(weather => {
-            if (weather.cod === '404') {
-                console.log('Erreur 404.');
-            }
-
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(forecastWeather => {
-                foreWeather = forecastWeather;
-                updateGraph(foreWeather);
-                updateWeather(weather);
-            });
-        });
-
-        cityHistory = localStorage.getItem('cities');
-        cityHistory.concat(location);
-        localStorage.setItem('cities', JSON.stringify(`${location}`));
-        console.log(cityHistory);
+        setLocation(userLocation);
+        // cityHistory = localStorage.getItem('cities');
+        // cityHistory.concat(location);
+        // localStorage.setItem('cities', JSON.stringify(`${location}`));
+        // console.log(cityHistory);
     }
 
     return (

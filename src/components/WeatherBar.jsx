@@ -15,7 +15,6 @@ import SearchBar from './SearchBar';
 function WeatherBar() {
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
     const location = useLocation();
-    console.log(location.pathname);
     const sunset = new Date(weatherInfos.sys.sunset * 1000);
     const sunrise = new Date(weatherInfos.sys.sunrise * 1000);
     const [tempColor, setTempColor] = useState('black');

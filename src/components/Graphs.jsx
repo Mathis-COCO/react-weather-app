@@ -25,7 +25,6 @@ ChartJS.register(
 function Graph(props) {
     const {type} = props;
     const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
-    console.log(weatherInfos);
     const dateValues = graphInfos.list.map((item) => {
         const date = new Date(item.dt_txt);
         const hours = String(date.getHours()).padStart(2, '0');
