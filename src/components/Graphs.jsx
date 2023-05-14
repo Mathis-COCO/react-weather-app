@@ -25,6 +25,7 @@ ChartJS.register(
 function Graph(props) {
     const {type} = props;
     const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
+    console.log(weatherInfos);
     const dateValues = graphInfos.list.map((item) => {
         const date = new Date(item.dt_txt);
         const hours = String(date.getHours()).padStart(2, '0');
@@ -34,7 +35,9 @@ function Graph(props) {
     });
     const tempValues = graphInfos.list.map((item) => item.main.temp);
     const windValues = graphInfos.list.map((item) => item.wind.speed);
-    console.log(graphInfos);
+    dateValues.unshift('now');
+    tempValues.unshift(weatherInfos.main.temp);
+    windValues.unshift(weatherInfos.wind.speed);
     const data = {
         labels: dateValues,
         datasets: [{
@@ -60,7 +63,6 @@ function Graph(props) {
             borderWidth: '2',
         }],
     };
-    console.log(windValues);
 
     return (
         <div>
