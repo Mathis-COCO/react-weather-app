@@ -43,9 +43,14 @@
     margin: 9px 40px 0 0;
     vertical-align: middle;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    cursor: pointer;
 }
 
 .navbar-height {
     height: 56px;
+}
+
+.navbar-focus {
+    margin: 5px 15px 0 0;
 }

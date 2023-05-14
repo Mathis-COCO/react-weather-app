@@ -59,11 +59,11 @@ function WeatherBar() {
             </div>
             <div className='inline'>
                 <div className='sun-container'>
-                    <img width='60' height='60' src='https://img.icons8.com/fluency-systems-regular/500/sunrise.png' alt='sunrise'/>
+                    <img width='60' height='60' src='https://img.icons8.com/fluency-systems-regular/100/sunrise.png' alt='sunrise'/>
                     <p className='sun-txt'>{sunrise.getHours().toString().padStart(2, '0')}:{sunrise.getMinutes().toString().padStart(2, '0')}</p>
                 </div>
                 <div className='sun-container'>
-                    <img width='60' height='60' src='https://img.icons8.com/fluency-systems-regular/500/sunset.png' alt='sunset'/>
+                    <img width='60' height='60' src='https://img.icons8.com/fluency-systems-regular/100/sunset.png' alt='sunset'/>
                     <p className='sun-txt'>{sunset.getHours().toString().padStart(2, '0')}:{sunset.getMinutes().toString().padStart(2, '0')}</p>
                 </div>
             </div>

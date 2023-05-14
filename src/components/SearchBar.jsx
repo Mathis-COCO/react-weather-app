@@ -9,8 +9,7 @@ import {WeatherContext} from '../providers/weather-provider';
 export default function SearchBar() {
     const [userLocation, setUserLocation] = useState('');
     const [weatherInfos, updateWeather, graphInfos, updateGraph, location, setLocation] = useContext(WeatherContext);
-    const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
-    // let cityHistory = [];
+    let cityHistory = [];
 
     const updateLoc = event => {
         setUserLocation(event.target.value);
@@ -23,10 +22,10 @@ export default function SearchBar() {
         }
 
         setLocation(userLocation);
-        // cityHistory = localStorage.getItem('cities');
-        // cityHistory.concat(location);
-        // localStorage.setItem('cities', JSON.stringify(`${location}`));
-        // console.log(cityHistory);
+        localStorage.setItem('cities', JSON.stringify(`${location}`));
+        cityHistory = localStorage.getItem('cities');
+        cityHistory.concat(location);
+        console.log(cityHistory);
     }
 
     return (

@@ -7,8 +7,7 @@ import '../css/SearchResults.scss';
 import WeatherLogos from './WeatherLogos';
 import {WeatherContext} from '../providers/weather-provider';
 
-function SearchResults(props) {
-    const showBar = props;
+function SearchResults() {
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
     return (
         <div className='space-evenly'>
