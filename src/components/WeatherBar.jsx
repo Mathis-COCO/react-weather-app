@@ -12,7 +12,7 @@ import {useLocation} from 'react-router-dom';
 function WeatherBar() {
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
     const location = useLocation();
-    console.log(location);
+    console.log(location.pathname);
     // const [background, setBackground] = useState('rgba(255, 255, 255, 0.385)');
     // // console.log(weatherInfos.weather[0].main);
     // const styles = {
@@ -43,23 +43,16 @@ function WeatherBar() {
 
     return (
         <div className='weather-bar-main' /* style={styles.weatherbar} */>
-            <div className='logos-container'>
-                <WeatherLogos />
-            </div>
-            {location.pathname === '/map' ? (
-                <div className='inline'>
-                    <div className='logos-container'>
-                        <WeatherLogos />
-                    </div>
+            <div className='inline'>
+                <div className='logos-container'>
+                    <WeatherLogos />
+                </div>
+                { location.pathname === '/map' ? (
                     <div className='current-temp-container'>
                         <p>{weatherInfos.main.temp}</p>
                     </div>
-                </div>
-            )
-            : <div className='logos-container'>
-                <WeatherLogos />
-              </div>
-            }
+                ) : null }
+            </div>
             <div className='graph-container'>
                 <Graph type='temp'/>
             </div>
