@@ -72,7 +72,8 @@ function Graph(props) {
     };
 
     const [showData1, setShowData] = useState(0);
-    const tempDataPopup = [`Today Now ${weatherInfos.main.temp}°C <br>`];
+    const currentDate = new Date();
+    const tempDataPopup = [`,${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} now ${weatherInfos.main.temp}°C <br>`];
 
     for (let i = 1; i < dateValues.length || i < tempValues.length; i++) {
         if (i < tempValues.length) {

@@ -1,7 +1,7 @@
 .graph-main {
     background-color:white;
     border-radius: 25px;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .temp-data-popup {
@@ -10,4 +10,5 @@
     word-spacing: 100px;
     display: flex;
     justify-content: center;
+    line-height: 25px;
 }
