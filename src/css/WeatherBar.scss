@@ -23,7 +23,7 @@
     margin-top: 20px;
     margin-bottom: 40px;
     height: 244px;
-    overflow: scroll;
+    overflow: hidden;
     border-radius: 25px;
 }
 
@@ -71,14 +71,17 @@
     height: 100px;
     transition: transform 0.5s;
     overflow: hidden;
+    margin: 32.5px 25px 0 0;
 }
 
 .city-name-container {
-    width: 300px;
+    width: 80%;
+    margin: 0;
+    padding: 0;
 }
 
 .city-name {
-    width: 250px;
+    width: 100%;
     white-space: nowrap;
     overflow-x: scroll;
 }

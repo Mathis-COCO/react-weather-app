@@ -73,7 +73,9 @@ function WeatherBar() {
                     <WeatherMap height={100} width={100} zoom={0} />
                 </div>
                 <div className='city-name-container'>
-                    <p className='sun-container city-name'>{weatherInfos.name}</p>
+                    <div className='city-name-subcontainer'>
+                        <p className='sun-container city-name'>{weatherInfos.name}</p>
+                    </div>
                 </div>
             </div>
 
