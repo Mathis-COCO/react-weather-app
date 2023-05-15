@@ -133,7 +133,7 @@ export default function Homepage() {
                         <div className='results-card' style={styles.results}>
                             <SearchResults showBar={showBar} />
                             <div className='map-homepage' style={styles.map}>
-                                <WeatherMap height={600} width={1000} />
+                                <WeatherMap height={600} width={1000} zoom={12}/>
                             </div>
                         </div>
                     </div>

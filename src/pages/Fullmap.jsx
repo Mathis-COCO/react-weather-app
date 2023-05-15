@@ -19,6 +19,7 @@ function Fullmap() {
                 <WeatherMap
                 height={windowSize.current[1] - 56}
                 width={windowSize.current[0]}
+                zoom={12}
                 />
             </div>
         </div>

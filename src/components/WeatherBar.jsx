@@ -11,6 +11,7 @@ import WeatherLogos from './WeatherLogos';
 import Graph from './Graphs';
 import {useLocation} from 'react-router-dom';
 import SearchBar from './SearchBar';
+import WeatherMap from './Map';
 
 function WeatherBar() {
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
@@ -66,6 +67,9 @@ function WeatherBar() {
                     <img width='60' height='60' src='https://img.icons8.com/fluency-systems-regular/100/sunset.png' alt='sunset'/>
                     <p className='sun-txt'>{sunset.getHours().toString().padStart(2, '0')}:{sunset.getMinutes().toString().padStart(2, '0')}</p>
                 </div>
+            </div>
+            <div className='sphere'>
+                <WeatherMap height={100} width={100} zoom={0} />
             </div>
         </div>
     );

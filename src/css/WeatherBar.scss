@@ -64,3 +64,11 @@
 .sun-txt {
     margin: 8px;
 }
+
+.sphere {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    transition: transform 0.5s;
+    overflow: hidden;
+}

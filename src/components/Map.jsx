@@ -23,7 +23,8 @@ L.Icon.Default.mergeOptions({
 function WeatherMap(props) {
     const animateRef = useRef();
     const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
-    const {height, width} = props;
+    const {height, width, zoom} = props;
+    const [currentZoom, setCurrentZoom] = useState(zoom);
     const [position, setPosition] = useState({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     const styles = {
@@ -36,11 +37,12 @@ function WeatherMap(props) {
     useEffect(() => {
         setPosition({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
         getTemp({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
+        setCurrentZoom(zoom);
     }, [weatherInfos.coord.lat, weatherInfos.coord.lon]);
 
     function ChangeView() {
         const map = useMap();
-        map.flyTo([position.lat, position.lng], 12);
+        map.flyTo([position.lat, position.lng], zoom);
         return null;
     }
 
@@ -65,8 +67,8 @@ function WeatherMap(props) {
 
     return (
         <div className='map-main-container'>
-            <MapContainer className='map-container' center={position} zoom={9} scrollWheelZoom={true} style={styles.mapContainer}>
-                <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
+            <MapContainer className='map-container' center={position} zoom={currentZoom} scrollWheelZoom={true} style={styles.mapContainer} zoomControl={false} attributionControl={false}>
+                <TileLayer url={osm.maptiler.url} />
                 <ChangeView zoom={12} />
                 <Marker position={position}>
                     <Popup>

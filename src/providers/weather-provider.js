@@ -5,6 +5,8 @@
 
 /* eslint-disable indent */
 import React, {createContext, useEffect, useState} from 'react';
+import '../css/App.scss';
+import pageLoader from '../img/loader1.gif';
 
 export const WeatherContext = createContext({}); // Stocker tout le json contenant la data de meteo
 
@@ -13,27 +15,30 @@ const WeatherProvider = props => {
     let foreWeather = null;
     const [weatherInfos, setWeatherInfos] = useState(false);
     const [graphInfos, setGraphInfos] = useState(false);
-    const [location, setLocation] = useState('Sainte-Anne');
+    const [location, setLocation] = useState('Sainte-Anne Guadeloupe');
     const [isLoading, setIsLoading] = useState(true);
+    const API_URL = `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`;
 
-    function GetInfos(city) {
-        if (city) {
-            setLocation(city);
-        }
+    function GetInfos() {
+        fetch(API_URL)
+        .then(response => response.json())
+        .then(data =>
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${data[0].lat}&lon=${data[0].lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(weather => {
+                if (weather.cod === '404') {
+                    console.log('Erreur 404.');
+                }
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
-        &units=metric&appid=${APIKey}`).then(response => response.json()).then(weather => {
-            if (weather.cod === '404') {
-                console.log('Erreur 404.');
-            }
-
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(forecastWeather => {
-                foreWeather = forecastWeather;
-                updateGraph(foreWeather);
-                updateWeather(weather);
-                setIsLoading(false);
-            });
-        });
+                fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(forecastWeather => {
+                    foreWeather = forecastWeather;
+                    updateGraph(foreWeather);
+                    updateWeather(weather);
+                    setTimeout(() => {
+                        setIsLoading(false);
+                    }, 500);
+                });
+            }),
+        )
+        .catch(error => console.error(error));
     }
 
     function updateWeather(weather) {
@@ -58,7 +63,7 @@ const WeatherProvider = props => {
     }, [location]);
 
     if (isLoading) {
-        return <div>Chargement en cours...</div>;
+        return <div className='page-loader'><div><img src={pageLoader} className='page-loader-gif' alt='chargement en cours...'></img><p className='loading-txt'>chargement en cours</p> </div></div>;
       }
 
     return (
