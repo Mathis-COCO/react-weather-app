@@ -14,18 +14,14 @@ export const WeatherContext = createContext({}); // Stocker tout le json contena
 const WeatherProvider = props => {
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     let foreWeather = null;
-    const [weatherInfos, setWeatherInfos] = useState(false);
+    const [weatherInfos, setWeatherInfos] = useState({coord: {lat: 54.2, lon: 41.2}});
     const [graphInfos, setGraphInfos] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const params = new URLSearchParams(window.location.search);
-    const [location, setLocation] = useState(params.get('city') ? params.get('city') : 'Sainte-Anne Guadeloupe');
+    const [location, setLocation] = useState(params.get('city') ? params.get('city') : 'Sainte-Anne-Guadeloupe');
     const API_URL = `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`;
 
     function GetInfos() {
-        if (location === 'null' || location === null) {
-            setLocation('Sainte-Anne Guadeloupe');
-        }
-
         window.history.pushState(null, null, `?city=${location}`);
         fetch(API_URL)
         .then(response => response.json())
@@ -53,7 +49,7 @@ const WeatherProvider = props => {
     }
 
     function updateGraph(futureWeather) {
-            setGraphInfos(futureWeather);
+        setGraphInfos(futureWeather);
     }
 
     const contextValues = [

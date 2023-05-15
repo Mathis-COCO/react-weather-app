@@ -41,7 +41,8 @@ function WeatherBar() {
     }
 
     function ChangeNameWidth() {
-        ((weatherInfos.name).length) > 15 ? setNamePadding('70px') : setNamePadding('0px');
+        console.log(`${10 * (((weatherInfos.name).length) - 15)} px`);
+        ((weatherInfos.name).length) > 15 ? setNamePadding(`${-20 + (16 * (((weatherInfos.name).length) - 15))}px`) : setNamePadding('0px');
     }
 
     useEffect(() => {

@@ -27,6 +27,7 @@ function WeatherMap(props) {
     const [currentZoom, setCurrentZoom] = useState(zoom);
     const [position, setPosition] = useState({lat: weatherInfos.coord.lat, lng: weatherInfos.coord.lon});
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
+    const params = new URLSearchParams(window.location.search);
     const styles = {
         mapContainer: {
             height,
@@ -59,7 +60,7 @@ function WeatherMap(props) {
     const getTemp = (position) => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lng}&units=metric&appid=${APIKey}`).then(response => response.json()).then(weather => {
             updateWeather(weather);
-            setLocation(weather.name);
+            window.history.pushState(null, null, `?city=${weather.name}`);
             fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(forecastWeather => {
                 updateGraph(forecastWeather);
             });
