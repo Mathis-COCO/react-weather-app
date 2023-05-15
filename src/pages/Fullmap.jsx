@@ -10,7 +10,7 @@ import '../css/FullMap.scss';
 function Fullmap() {
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
     return (
-        <div>
+        <div className='full-map-container'>
             <div className='weatherbar-container'>
                 <WeatherBar />
             </div>

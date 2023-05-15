@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable capitalized-comments */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -13,6 +14,7 @@ import {
     CategoryScale,
     LinearScale,
     PointElement,
+    Filler,
 } from 'chart.js';
 
 ChartJS.register(
@@ -20,6 +22,7 @@ ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
+    Filler,
 );
 
 function Graph(props) {
@@ -41,9 +44,10 @@ function Graph(props) {
         labels: dateValues,
         datasets: [{
             data: tempValues,
-            backgroundColor: 'lightBlue',
+            fill: true,
             borderColor: 'green',
             borderWidth: '2',
+            tension: 0.4,
         }],
     };
 
@@ -56,25 +60,41 @@ function Graph(props) {
     const data2 = {
         labels: dateValues,
         datasets: [{
+            fill: true,
+            backgroundColor: 'rgba(46, 144, 205, 0.1)',
             data: windValues,
-            backgroundColor: 'lightBlue',
             borderColor: 'lightBlue',
             borderWidth: '2',
+            tension: 0.4,
         }],
     };
+
+    const tempDataPopup = [`Today Now ${weatherInfos.main.temp}°C <br>`];
+
+    for (let i = 1; i < dateValues.length || i < tempValues.length; i++) {
+        if (i < tempValues.length) {
+            tempDataPopup.push(`${dateValues[i]} ${tempValues[i]}°C <br>`);
+        }
+    }
 
     return (
         <div>
             <div className='graph-main'>
                 {type === 'temp'
-                    && <Line data={data} options={options}></Line>
+                    &&
+                    <div>
+                        <Line data={data} options={options}></Line>
+                        <div className='temp-data-popup'>
+                            <p dangerouslySetInnerHTML={{__html: tempDataPopup}}></p>
+                        </div>
+                    </div>
                 }
                 {type === 'climat'
                     && <Line data={data2} options={options}></Line>
                 }
             </div>
         </div>
-  );
+);
 }
 
 export default Graph;
