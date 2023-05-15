@@ -72,3 +72,13 @@
     transition: transform 0.5s;
     overflow: hidden;
 }
+
+.city-name-container {
+    width: 300px;
+}
+
+.city-name {
+    width: 250px;
+    white-space: nowrap;
+    overflow-x: scroll;
+}

@@ -39,6 +39,9 @@ function Graph(props) {
     });
     const tempValues = graphInfos.list.map((item) => item.main.temp);
     const windValues = graphInfos.list.map((item) => item.wind.speed);
+    const [showData, setShowData] = useState([0, 0]);
+    const currentDate = new Date();
+    const [tempDataPopup, setTempDataPopup] = useState([]);
     dateValues.unshift('now');
     tempValues.unshift(weatherInfos.main.temp);
     windValues.unshift(weatherInfos.wind.speed);
@@ -71,19 +74,29 @@ function Graph(props) {
         }],
     };
 
-    const [showData1, setShowData] = useState(0);
-    const currentDate = new Date();
-    const tempDataPopup = [`,${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} now ${weatherInfos.main.temp}°C <br>`];
-
-    for (let i = 1; i < dateValues.length || i < tempValues.length; i++) {
-        if (i < tempValues.length) {
-            tempDataPopup.push(`${dateValues[i]} ${tempValues[i]}°C <br>`);
+    function handleDataClick(clicked) {
+        const newArray = [];
+        if (clicked === '1') {
+            newArray.push([`${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} now ${weatherInfos.main.temp}°C <br>`]);
+            showData[0] ? setShowData([0, ...showData.slice(1)]) : setShowData([1, ...showData.slice(1)]);
+            for (let i = 1; i < dateValues.length || i < tempValues.length; i++) {
+                if (i < tempValues.length) {
+                    newArray.push(`${dateValues[i]} ${tempValues[i]}°C <br>`);
+                }
+            }
         }
-    }
 
-    function handleDataClick() {
-        console.log(showData1);
-        showData1 ? setShowData(0) : setShowData(1);
+        if (clicked === '2') {
+            newArray.push([`${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} now ${weatherInfos.wind.speed}°km/h <br>`]);
+            showData[1] ? setShowData([...showData.slice(0), 0]) : setShowData([...showData.slice(0), 1]);
+            for (let i = 1; i < dateValues.length || i < windValues.length; i++) {
+                if (i < tempValues.length) {
+                    newArray.push(`${dateValues[i]} ${windValues[i]}km/h <br>`);
+                }
+            }
+        }
+
+        setTempDataPopup(newArray);
     }
 
     return (
@@ -91,19 +104,27 @@ function Graph(props) {
             <div className='graph-main'>
                 {type === 'temp'
                     &&
-                    <div onClick={handleDataClick}>
-                        { !showData1 ? (
+                    <div onClick={() => handleDataClick('1')}>
+                        { !showData[0] ? (
                             <Line data={data} options={options} ></Line>
-                        ) : null }
-                        { showData1 ? (
+                        ) : (
                             <div className='temp-data-popup'>
                                 <p dangerouslySetInnerHTML={{__html: tempDataPopup}}></p>
                             </div>
-                        ) : null}
+                        )}
                     </div>
                 }
                 {type === 'climat'
-                    && <Line data={data2} options={options}></Line>
+                    &&
+                    <div onClick={() => handleDataClick('2')}>
+                    { !showData[1] ? (
+                        <Line data={data2} options={options} ></Line>
+                    ) : (
+                        <div className='temp-data-popup'>
+                            <p dangerouslySetInnerHTML={{__html: tempDataPopup}}></p>
+                        </div>
+                    )}
+                </div>
                 }
             </div>
         </div>
