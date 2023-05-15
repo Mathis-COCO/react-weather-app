@@ -1,3 +1,4 @@
+/* eslint-disable capitalized-comments */
 /* eslint-disable new-cap */
 /* eslint-disable camelcase */
 
@@ -10,28 +11,22 @@ import pageLoader from '../img/loader1.gif';
 
 export const WeatherContext = createContext({}); // Stocker tout le json contenant la data de meteo
 
-const params = new URLSearchParams(window.location.search);
-const cityParam = params.get('city');
-
 const WeatherProvider = props => {
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     let foreWeather = null;
     const [weatherInfos, setWeatherInfos] = useState(false);
     const [graphInfos, setGraphInfos] = useState(false);
-    const [location, setLocation] = useState('Sainte Anne Guadeloupe');
     const [isLoading, setIsLoading] = useState(true);
+    const params = new URLSearchParams(window.location.search);
+    const [location, setLocation] = useState(params.get('city') ? params.get('city') : 'Sainte-Anne Guadeloupe');
     const API_URL = `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`;
 
     function GetInfos() {
-        console.log(cityParam);
-        if (cityParam) {
-            setLocation(cityParam);
-        }
-
-        if (cityParam === null) {
+        if (location === 'null' || location === null) {
             setLocation('Sainte-Anne Guadeloupe');
         }
 
+        window.history.pushState(null, null, `?city=${location}`);
         fetch(API_URL)
         .then(response => response.json())
         .then(data =>
@@ -72,7 +67,7 @@ const WeatherProvider = props => {
 
     useEffect(() => {
         GetInfos();
-    }, [location, cityParam]);
+    }, [location]);
 
     if (isLoading) {
         return <div className='page-loader'><div><img src={pageLoader} className='page-loader-gif' alt='chargement en cours...'></img><p className='loading-txt'>chargement en cours</p> </div></div>;
