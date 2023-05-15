@@ -65,23 +65,30 @@
     margin: 8px;
 }
 
+.city-minimap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32.5px;
+}
+
 .sphere {
     border-radius: 50%;
     width: 100px;
     height: 100px;
     transition: transform 0.5s;
     overflow: hidden;
-    margin: 32.5px 25px 0 0;
+    margin-right: 25px;
 }
 
 .city-name-container {
-    width: 80%;
-    margin: 0;
-    padding: 0;
+    width: 300px;
+    padding: 0 25px 0 25px;
 }
 
-.city-name {
-    width: 100%;
+.city-name-subcontainer {
+    display: flex;
+    justify-content: center;
     white-space: nowrap;
     overflow-x: scroll;
+    padding-left: 70px;
 }

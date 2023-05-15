@@ -119,7 +119,7 @@ function Graph(props) {
                 };
                 {type === 'climat'
                     &&
-                    <div onClick={() => handleDataClick('2')}>
+                    <div onClick={() => handleDataClick('2')} className='wind-graph'>
                         { !showData2 ? (
                             <Line data={data2} options={options} ></Line>
                         ) : (

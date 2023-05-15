@@ -68,13 +68,13 @@ function WeatherBar() {
                     <p className='sun-txt'>{sunset.getHours().toString().padStart(2, '0')}:{sunset.getMinutes().toString().padStart(2, '0')}</p>
                 </div>
             </div>
-            <div className='inline space-between'>
+            <div className='city-minimap'>
                 <div className='sphere'>
                     <WeatherMap height={100} width={100} zoom={0} />
                 </div>
-                <div className='city-name-container'>
+                <div className='city-name-container sun-container'>
                     <div className='city-name-subcontainer'>
-                        <p className='sun-container city-name'>{weatherInfos.name}</p>
+                        <p className=' city-name'>{weatherInfos.name}</p>
                     </div>
                 </div>
             </div>
