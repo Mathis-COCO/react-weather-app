@@ -1,152 +1,30 @@
 /* eslint-disable capitalized-comments */
 /* eslint-disable no-unused-vars */
 /* eslint-disable indent */
-import {React, useContext, useState} from 'react';
-import '../css/App.scss';
-import {FiSearch} from 'react-icons/fi';
-import SearchResults from '../components/SearchResults';
-import WeatherMap from '../components/Map.jsx';
+import {React, useRef} from 'react';
+import WeatherMap from '../components/Map';
 import Navbar from '../components/Navbar';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faGear, faUpRightAndDownLeftFromCenter} from '@fortawesome/free-solid-svg-icons';
-import {WeatherContext} from '../providers/weather-provider';
 import WeatherBar from '../components/WeatherBar';
-import {Link} from 'react-router-dom';
+import '../css/FullMap.scss';
 
-export default function Homepage() {
-    const [location, setLocation] = useState('');
-    const [showResults, setShowResults] = useState(false);
-    const [margin, setMargin] = useState(40);
-    const [showMap, setShowMap] = useState(true);
-    const [resultHeight, setResultHeight] = useState(0);
-    const [weatherInfos, updateWeather, graphInfos, updateGraph] = useContext(WeatherContext);
-    const [showBar, setShowBar] = useState(false);
-    const APIKey = process.env.REACT_APP_WEATHER_API_KEY;
-    let foreWeather = null;
-    // let cityHistory = [];
-
-    const updateLoc = event => {
-        setLocation(event.target.value);
-    };
-
-    const styles = {
-        searchbar: {
-            transition: showMap ? 'all 1s ease-out' : 'all 1s ease-out 1s',
-            marginTop: `${margin}vh`,
-        },
-        results: {
-            height: `${resultHeight}px`,
-            transition: showMap ? 'height 1s ease 1s' : 'height 1s ease 0s',
-        },
-        leftbar: {
-            opacity: showBar ? 1 : 0,
-            transition: showBar ? 'opacity 1s ease 1s' : 'opacity 1s ease 0s',
-            height: '690px',
-            width: '400px',
-            backgroundColor: 'rgba(255, 255, 255, 0.385)',
-            borderRadius: '0 25px 25px 0',
-            border: 'solid white 1px',
-        },
-        map: {
-            opacity: showMap ? 1 : 0,
-            transition: showMap ? 'opacity 1s ease 1s' : 'opacity 1s ease 0s',
-        },
-    };
-
-    function toggleMap() {
-        if (showMap) {
-            setShowMap(false);
-            setShowBar(false);
-            setMargin(40);
-            setResultHeight(80);
-        } else {
-            setShowMap(true);
-            setMargin(10);
-            setResultHeight(690);
-            setShowBar(true);
-        }
-    }
-
-    function toggleBar() {
-        if (showBar) {
-            setShowBar(false);
-        } else {
-            setShowBar(true);
-        }
-    }
-
-    function apiLocation(event) {
-        event.preventDefault();
-        if (location === '') {
-            setShowResults(false);
-            setMargin(40);
-            setResultHeight(0);
-            return;
-        }
-
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
-        &units=metric&appid=${APIKey}`).then(response => response.json()).then(weather => {
-            if (weather.cod === '404') {
-                setShowResults(false);
-            }
-
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(forecastWeather => {
-                foreWeather = forecastWeather;
-                setShowResults(true);
-                if (showMap) {
-                    setMargin(10);
-                    setResultHeight(0);
-                    setTimeout(() => {
-                        setResultHeight(690);
-                        setShowBar(true);
-                    }, 0);
-                } else if (!showMap) {
-                    setResultHeight(80);
-                }
-
-                updateGraph(foreWeather);
-                updateWeather(weather);
-            });
-        });
-
-        // cityHistory = localStorage.getItem('cities');
-        // cityHistory.concat(location);
-        // localStorage.setItem('cities', JSON.stringify(`${location}`));
-        // console.log(cityHistory);
-    }
-
+function Homepage() {
+    const windowSize = useRef([window.innerWidth, window.innerHeight]);
     return (
-        <div className='main-div'>
-            <Navbar />
-            <div>
-                <form onSubmit={apiLocation} className='searchbar' style={styles.searchbar} >
-                    <input onChange={updateLoc} type='text' placeholder='Rechercher...'/>
-                    <div>
-                        <button type='submit'><FiSearch color='white' fontSize='1.5em' /></button>
-                    </div>
-                </form>
-                { showResults && (
-                    <div className='result-container'>
-                        <div style={styles.leftbar} className='left-bar' >
-                            <WeatherBar />
-                        </div>
-                        <div className='results-card' style={styles.results}>
-                            <SearchResults showBar={showBar} />
-                            <div className='map-homepage' style={styles.map}>
-                                <WeatherMap height={600} width={1000} zoom={12}/>
-                            </div>
-                        </div>
-                    </div>
-                )}
+        <div className='full-map-container'>
+            <div className='weatherbar-container'>
+                <WeatherBar />
             </div>
-            { showResults && (
-                <div className='option-parent'>
-                    <FontAwesomeIcon icon={faGear} className='option-sub-btn' />
-                    <button onClick={toggleBar}>+</button>
-                    <button><Link to={'/map'} className='option-sub-btn'><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></Link></button>
-                    <button className='option-sub-btn' onClick={toggleMap}>X</button>
-                </div>
-            )}
+            <Navbar />
+            <div className='fullmap-container'>
+                <WeatherMap
+                height={windowSize.current[1] - 56}
+                width={windowSize.current[0]}
+                zoom={12}
+                />
+            </div>
         </div>
+
     );
 }
+
+export default Homepage;

@@ -1,18 +1,18 @@
 /* eslint-disable indent */
 import React from 'react';
 import {Routes, BrowserRouter as Router, Route} from 'react-router-dom';
-import Fullmap from './pages/Fullmap.jsx';
 import Homepage from './pages/Homepage.jsx';
 import WeatherProvider from './providers/weather-provider.js';
+import OldSite from './pages/OldSite.jsx';
 
 function App() {
   return (
     <WeatherProvider>
       <Router>
         <Routes>
-          <Route path='/' element={<Fullmap />}/>
-          <Route path='/old-site' element={<Homepage />}/>
-          <Route path='/map' element={<Fullmap />}/>
+          <Route path='/' element={<Homepage />}/>
+          <Route path='/old-site' element={<OldSite />}/>
+          <Route path='/map' element={<Homepage />}/>
         </Routes>
       </Router>
     </WeatherProvider>
