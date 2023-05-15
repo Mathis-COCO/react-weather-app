@@ -1,3 +1,5 @@
+/* eslint-disable no-negated-condition */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable operator-linebreak */
 /* eslint-disable capitalized-comments */
 /* eslint-disable no-unused-vars */
@@ -69,6 +71,7 @@ function Graph(props) {
         }],
     };
 
+    const [showData1, setShowData] = useState(0);
     const tempDataPopup = [`Today Now ${weatherInfos.main.temp}°C <br>`];
 
     for (let i = 1; i < dateValues.length || i < tempValues.length; i++) {
@@ -77,16 +80,25 @@ function Graph(props) {
         }
     }
 
+    function handleDataClick() {
+        console.log(showData1);
+        showData1 ? setShowData(0) : setShowData(1);
+    }
+
     return (
         <div>
             <div className='graph-main'>
                 {type === 'temp'
                     &&
-                    <div>
-                        <Line data={data} options={options}></Line>
-                        <div className='temp-data-popup'>
-                            <p dangerouslySetInnerHTML={{__html: tempDataPopup}}></p>
-                        </div>
+                    <div onClick={handleDataClick}>
+                        { !showData1 ? (
+                            <Line data={data} options={options} ></Line>
+                        ) : null }
+                        { showData1 ? (
+                            <div className='temp-data-popup'>
+                                <p dangerouslySetInnerHTML={{__html: tempDataPopup}}></p>
+                            </div>
+                        ) : null}
                     </div>
                 }
                 {type === 'climat'

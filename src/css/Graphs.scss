@@ -1,13 +1,13 @@
 .graph-main {
     background-color:white;
     border-radius: 25px;
+    overflow: hidden;
 }
 
 .temp-data-popup {
-    background-color: white;
-    border-radius: 25px;
-    position: absolute;
-    width: 500px;
+    width: 100%;
+    height: 100%;
     word-spacing: 100px;
-    letter-spacing: 2px;
+    display: flex;
+    justify-content: center;
 }
