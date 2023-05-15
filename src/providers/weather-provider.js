@@ -10,16 +10,28 @@ import pageLoader from '../img/loader1.gif';
 
 export const WeatherContext = createContext({}); // Stocker tout le json contenant la data de meteo
 
+const params = new URLSearchParams(window.location.search);
+const cityParam = params.get('city');
+
 const WeatherProvider = props => {
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;
     let foreWeather = null;
     const [weatherInfos, setWeatherInfos] = useState(false);
     const [graphInfos, setGraphInfos] = useState(false);
-    const [location, setLocation] = useState('Sainte-Anne Guadeloupe');
+    const [location, setLocation] = useState('Sainte Anne Guadeloupe');
     const [isLoading, setIsLoading] = useState(true);
     const API_URL = `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`;
 
     function GetInfos() {
+        console.log(cityParam);
+        if (cityParam) {
+            setLocation(cityParam);
+        }
+
+        if (cityParam === null) {
+            setLocation('Sainte-Anne Guadeloupe');
+        }
+
         fetch(API_URL)
         .then(response => response.json())
         .then(data =>
@@ -60,7 +72,7 @@ const WeatherProvider = props => {
 
     useEffect(() => {
         GetInfos();
-    }, [location]);
+    }, [location, cityParam]);
 
     if (isLoading) {
         return <div className='page-loader'><div><img src={pageLoader} className='page-loader-gif' alt='chargement en cours...'></img><p className='loading-txt'>chargement en cours</p> </div></div>;

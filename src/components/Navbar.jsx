@@ -33,9 +33,7 @@ function Navbar() {
 
     const getTemp = () => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
-            const location = json.name;
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}
-            &units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${json.coord.lat}&lon=${json.coord.lon}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
                 setCurrentPosition(json);
             });
         });
