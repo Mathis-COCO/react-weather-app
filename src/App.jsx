@@ -10,7 +10,8 @@ function App() {
     <WeatherProvider>
       <Router>
         <Routes>
-          <Route path='/' element={<Homepage />}/>
+          <Route path='/' element={<Fullmap />}/>
+          <Route path='/old-site' element={<Homepage />}/>
           <Route path='/map' element={<Fullmap />}/>
         </Routes>
       </Router>

@@ -13,7 +13,7 @@ function Navbar() {
     let coords = {latitude: 48.8534, longitude: 2.3488};
     const [currentPosition, setCurrentPosition] = useState();
     const pageLocation = useLocation();
-    const styles = {background: pageLocation.pathname === '/' ? 'rgba(89, 89, 89, 0.459)' : 'rgb(79, 173, 255)'};
+    const styles = {background: pageLocation.pathname === '/old-site' ? 'rgba(89, 89, 89, 0.459)' : 'rgb(79, 173, 255)'};
     const navigate = useNavigate();
     const handleClick = () => navigate('/');
     const APIKey = process.env.REACT_APP_WEATHER_NAV_API_KEY;

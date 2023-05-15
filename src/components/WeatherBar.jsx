@@ -60,11 +60,9 @@ function WeatherBar() {
                 <div className='logos-container'>
                     <WeatherLogos />
                 </div>
-                { location.pathname === '/map' ? (
-                    <div className='current-temp-container'>
-                        <p style={styles.temp}>{weatherInfos.main.temp}°C</p>
-                    </div>
-                ) : null }
+                <div className='current-temp-container'>
+                    <p style={styles.temp}>{weatherInfos.main.temp}°C</p>
+                </div>
             </div>
             <div className='graph-container'>
                 <Graph type='temp'/>
