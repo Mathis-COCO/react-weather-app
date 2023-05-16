@@ -25,6 +25,7 @@ function WeatherBar() {
     const [namePadding, setNamePadding] = useState('0px');
     const [switchTemp, setSwitchTemp] = useState(1);
     const [cityHistory, setCityHistory] = useState([]);
+    const [updatedCityHistory, setUpdatedCityHistory] = useState([]);
     const styles = {
         temp: {
             color: tempColor,
@@ -54,16 +55,20 @@ function WeatherBar() {
 
     function RemoveFav(index) {
         if (cityHistory[index]) {
-            setCityHistory(cityHistory.splice(index));
+            const updatedCityHistory = cityHistory.slice();
+            localStorage.setItem('cities', []);
+            updatedCityHistory.splice(index, 1);
+            setCityHistory(updatedCityHistory);
         }
     }
 
     function AddFav() {
-        console.log(cityHistory.length);
-        if (cityHistory < 9) {
-            setCityHistory([localStorage.getItem('cities')]);
-            setCityHistory(cityHistory.concat(weatherInfos.name));
-            localStorage.setItem('cities', JSON.stringify(`${cityHistory}`));
+        if (updatedCityHistory.length < 6 && !updatedCityHistory.includes(weatherInfos.name)) {
+            setUpdatedCityHistory([localStorage.getItem('cities')]);
+            setUpdatedCityHistory(updatedCityHistory.concat(weatherInfos.name));
+            console.log(updatedCityHistory);
+            localStorage.setItem('cities', JSON.stringify(updatedCityHistory));
+            setCityHistory(updatedCityHistory);
         }
     }
 
@@ -133,16 +138,18 @@ function WeatherBar() {
                 </div>
             </div>
             <div>
-            <div className='fav-container'>
-                    <div className='fav inline'>
-                        <div> {/* add dynamic styling */}
-                            <p className=' city-name fav-name'>{weatherInfos.name}</p>
-                        </div>
-                        <div className='delete-icon'>
-                            <FontAwesomeIcon className='fav-icon' icon={faTrashCan} onClick={RemoveFav(0)} />
+                { updatedCityHistory[0] && (
+                    <div className='fav-container'>
+                        <div className='fav inline'>
+                            <div> {/* add dynamic styling */}
+                                <p className=' city-name fav-name'>{updatedCityHistory}</p>
+                            </div>
+                            <div className='delete-icon'>
+                                <FontAwesomeIcon className='fav-icon' icon={faTrashCan} onClick={RemoveFav(0)} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
                 <div className='fav-container'>
                     <div className='fav inline'>
                         <div> {/* add dynamic styling */}
@@ -154,7 +161,6 @@ function WeatherBar() {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }
