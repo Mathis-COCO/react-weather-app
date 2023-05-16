@@ -52,15 +52,27 @@ function WeatherBar() {
         switchTemp ? setSwitchTemp(0) : setSwitchTemp(1);
     }
 
+    function RemoveFav(index) {
+        if (cityHistory[index]) {
+            setCityHistory(cityHistory.splice(index));
+        }
+    }
+
+    function AddFav() {
+        console.log(cityHistory.length);
+        if (cityHistory < 9) {
+            setCityHistory([localStorage.getItem('cities')]);
+            setCityHistory(cityHistory.concat(weatherInfos.name));
+            localStorage.setItem('cities', JSON.stringify(`${cityHistory}`));
+        }
+    }
+
     useEffect(() => {
         TempColor();
     }, [weatherInfos.main.temp]);
 
     useEffect(() => {
         ChangeNameWidth();
-        setCityHistory(localStorage.getItem('cities'), weatherInfos.name);
-        localStorage.setItem('cities', JSON.stringify(`${weatherInfos.name}`));
-        console.log(localStorage.getItem('cities'));
     }, [weatherInfos.name]);
 
     return (
@@ -127,7 +139,7 @@ function WeatherBar() {
                             <p className=' city-name fav-name'>{weatherInfos.name}</p>
                         </div>
                         <div className='delete-icon'>
-                            <FontAwesomeIcon className='fav-icon' icon={faTrashCan} />
+                            <FontAwesomeIcon className='fav-icon' icon={faTrashCan} onClick={RemoveFav(0)} />
                         </div>
                     </div>
                 </div>
@@ -137,7 +149,7 @@ function WeatherBar() {
                             <p className=' city-name fav-name'>(x/15)</p>
                         </div>
                         <div className='star-icon'>
-                            <FontAwesomeIcon className='fav-icon' icon={faStar} />
+                            <FontAwesomeIcon className='fav-icon' icon={faStar} onClick={AddFav} />
                         </div>
                     </div>
                 </div>
