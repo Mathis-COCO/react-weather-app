@@ -23,8 +23,7 @@ function WeatherBar() {
     const [tempColor, setTempColor] = useState('black');
     const [namePadding, setNamePadding] = useState('0px');
     const [switchTemp, setSwitchTemp] = useState(1);
-    const [cityHistory, setCityHistory] = useState([]);
-    const [updatedCityHistory, setUpdatedCityHistory] = useState([]);
+    const [favorites, setFavorites] = useState([]);
     const styles = {
         temp: {
             color: tempColor,
@@ -53,31 +52,34 @@ function WeatherBar() {
     }
 
     function RemoveFav(index) {
-        const updatedHistory = updatedCityHistory.filter((_, i) => i !== index);
-        setUpdatedCityHistory(updatedHistory);
+        const updatedHistory = favorites.filter((_, i) => i !== index);
+        setFavorites(updatedHistory);
+        localStorage.setItem('cities', JSON.stringify(updatedHistory));
     }
 
     function AddFav() {
-        if (updatedCityHistory.length < 5 && !updatedCityHistory.includes(weatherInfos.name)) {
-            setUpdatedCityHistory([localStorage.getItem('cities')]);
-            setUpdatedCityHistory(updatedCityHistory.concat(weatherInfos.name));
-            localStorage.setItem('cities', JSON.stringify(updatedCityHistory));
-            setCityHistory(updatedCityHistory);
+        if (favorites.length < 5 && !favorites.includes(weatherInfos.name)) {
+            setFavorites(prevFavorites => {
+                const newFavorites = [...prevFavorites, weatherInfos.name];
+                localStorage.setItem('cities', JSON.stringify(newFavorites));
+                return newFavorites;
+            });
         }
     }
 
     function ChooseFav(name) {
         setLocation(name);
-        console.log(name);
     }
 
     useEffect(() => {
         TempColor();
+        ChangeNameWidth();
     }, [weatherInfos.main.temp]);
 
     useEffect(() => {
-        ChangeNameWidth();
-    }, [weatherInfos.name]);
+        const localData = [localStorage.getItem('cities')];
+        setFavorites(JSON.parse(localData));
+    }, []);
 
     return (
         <div className='weather-bar-main'>
@@ -137,9 +139,9 @@ function WeatherBar() {
                 </div>
             </div>
             <div className='fav-main-container'>
-                { updatedCityHistory[0] && (
+                { favorites[0] && (
                     <div>
-                        {updatedCityHistory.map((name, index) => (
+                        {favorites.map((name, index) => (
                             <div className='fav-container' >
                                 <div className='fav inline' key={index}>
                                     <div>
@@ -155,11 +157,11 @@ function WeatherBar() {
                     </div>
                 )}
                 <div>
-                    { updatedCityHistory.length < 5 && (
+                    { favorites.length < 5 && (
                         <div className='fav-container' onClick={AddFav}>
                             <div className='fav inline'>
                                 <div>
-                                    <p id='city-count' className='city-name fav-name'>{updatedCityHistory.length}/5</p>
+                                    <p id='city-count' className='city-name fav-name'>{favorites.length}/5</p>
                                     <p id='add-to-fav' className='add-to-fav'>ajouter aux favoris</p>
                                 </div>
                                 <div id='star-icon' className='star-icon'>
