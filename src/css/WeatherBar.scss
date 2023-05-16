@@ -14,6 +14,7 @@
     backdrop-filter: blur(8.8px);
     -webkit-backdrop-filter: blur(8.8px);
     border: 1px solid rgb(255, 255, 255);
+    overflow-y: scroll;
 }
 
 .graph-container {
@@ -116,4 +117,8 @@
 
 .sun-txt-2 {
     color: rgb(200, 55, 36);
+}
+
+.temp-map-container {
+    margin-bottom: 100px;
 }

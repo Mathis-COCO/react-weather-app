@@ -98,7 +98,6 @@ function Graph(props) {
             }
         }
 
-        console.log(showData1);
         setTempDataPopup(newArray);
     }
 

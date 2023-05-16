@@ -25,7 +25,6 @@ export default function SearchBar() {
         localStorage.setItem('cities', JSON.stringify(`${location}`));
         cityHistory = localStorage.getItem('cities');
         cityHistory.concat(location);
-        console.log(cityHistory);
     }
 
     return (

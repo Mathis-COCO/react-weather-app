@@ -1,7 +1,6 @@
-/* eslint-disable key-spacing */
-/* eslint-disable object-shorthand */
+
 /* eslint-disable no-unused-vars */
-/* eslint-disable capitalized-comments */
+
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-parens */
 /* eslint-disable indent */
@@ -67,6 +66,22 @@ function WeatherMap(props) {
         });
     };
 
+    function UseEffectToUpdateMapSize(props) {
+        const map = useMap();
+        const containerRef = map.getContainer();
+        const {height, width} = props;
+
+        useEffect(() => {
+            if (containerRef) {
+                containerRef.style.width = `${width}px`;
+                containerRef.style.height = `${height}px`;
+                map.invalidateSize();
+            }
+        }, [containerRef, height, map, width]);
+
+        return null;
+    }
+
     return (
         <div className='map-main-container'>
             <MapContainer className='map-container' center={position} zoom={currentZoom} scrollWheelZoom={true} style={styles.mapContainer} zoomControl={false} attributionControl={false}>
@@ -79,9 +94,12 @@ function WeatherMap(props) {
                     </Popup>
                 </Marker>
                 <SetViewOnClick animateRef={animateRef} />
+                {/* Add the useEffect hook to update the map size */}
+                {props.height && props.width && (
+                    <UseEffectToUpdateMapSize height={props.height} width={props.width} />
+                )}
             </MapContainer>
         </div>
-
     );
 }
 

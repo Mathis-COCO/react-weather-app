@@ -58,8 +58,6 @@ function WeatherBar() {
         ChangeNameWidth();
     }, [weatherInfos.name]);
 
-    console.log(weatherInfos);
-
     return (
         <div className='weather-bar-main'>
             <SearchBar />
@@ -97,7 +95,7 @@ function WeatherBar() {
                         </div>
                     </div>
                 </div>
-                <div onClick={SwitchTemp}>
+                <div onClick={SwitchTemp} className='temp-map-container'>
                     { switchTemp ? (
                         <><div className='temp-container'>
                             <FontAwesomeIcon style={styles.temp} icon={faTemperatureThreeQuarters} />
