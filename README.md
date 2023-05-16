@@ -1,3 +1,15 @@
+# React Weather App 
+
+Current pages
+![Homepage Image](./src/img/site_preview_1.png)
+![Homepage Image](./src/img/site_preview_2.png)
+![Homepage Image](./src/img/site_preview_3.png)
+![Homepage Image](./src/img/site_preview_4.png)
+Old page
+![Homepage Image](./src/img/site_preview_5.png)
+![Homepage Image](./src/img/site_preview_6.png)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
