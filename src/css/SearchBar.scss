@@ -1,6 +1,6 @@
 .left-searchbar {
     display: flex;
-    margin: 50px auto 50px auto;
+    margin: 25px auto 25px auto;
     width: 100%;
     height: 35px;
     padding: 10px;
@@ -17,7 +17,7 @@
     margin: 0 0 0 20px;
     background-color: transparent;
     width: 100%;
-    color: deepskyblue;
+    color: rgb(0, 149, 255);
     font-size: 20px;
     font-weight: 300;
     letter-spacing: 1.5px;
@@ -26,7 +26,7 @@
 .left-searchbar > input:focus{outline: none;}
 
 .left-searchbar > input::placeholder {
-    color: deepskyblue;
+    color: rgb(0, 149, 255);
     font-size: 20px;
     font-weight: 300;
     letter-spacing: 3px;
