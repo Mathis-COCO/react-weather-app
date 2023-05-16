@@ -138,10 +138,10 @@ function WeatherBar() {
                 { updatedCityHistory[0] && (
                     <div>
                         {updatedCityHistory.map((name, index) => (
-                            <div className='fav-container'>
+                            <div className='fav-container' >
                                 <div className='fav inline' key={index}>
                                     <div>
-                                        <p className=' city-name fav-name' >{name}</p>
+                                        <p className=' city-name fav-txt' >{name}</p>
                                     </div>
                                     <div className='delete-icon'>
                                         <FontAwesomeIcon className='fav-icon' icon={faTrashCan} onClick={() => RemoveFav(index)} />
@@ -157,13 +157,15 @@ function WeatherBar() {
                         <div className='fav-container' onClick={AddFav}>
                             <div className='fav inline'>
                                 <div>
-                                    <p className=' city-name fav-name'>{updatedCityHistory.length}/5</p>
+                                    <p id='city-count' className='city-name fav-name'>{updatedCityHistory.length}/5</p>
+                                    <p id='add-to-fav' className='add-to-fav'>ajouter aux favoris</p>
                                 </div>
-                                <div className='star-icon'>
+                                <div id='star-icon' className='star-icon'>
                                     <FontAwesomeIcon className='fav-icon' icon={faStar} />
                                 </div>
                             </div>
                         </div>
+
                     )}
                 </div>
 

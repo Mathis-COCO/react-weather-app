@@ -138,7 +138,7 @@
 }
 
 .fav-name {
-    margin-left: 40px;
+    margin-left: 200px;
 }
 
 .fav-icon {
@@ -147,9 +147,6 @@
 
 .star-icon {
     color: rgb(108, 108, 108);
-    :hover {
-        color: rgb(208, 208, 20);
-    }
 }
 
 .delete-icon {
@@ -162,4 +159,27 @@
 .fav-main-container {
     margin-bottom: 100px;
     margin-top: 15px;
+}
+
+.add-to-fav {
+    display: none;
+}
+
+.fav-container:hover #city-count {
+    display: none;
+}
+
+.fav-container:hover #add-to-fav {
+    display: block;
+    color: rgb(208, 208, 20);
+    font-weight: 600;
+    margin-left: 100px;
+}
+
+.fav-container:hover #star-icon {
+    color: rgb(208, 208, 20);
+}
+
+.fav-txt {
+    margin-left: 40px;
 }
