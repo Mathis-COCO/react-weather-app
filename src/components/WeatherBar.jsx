@@ -55,12 +55,9 @@ function WeatherBar() {
     }
 
     function RemoveFav(index) {
-        if (cityHistory[index]) {
-            const updatedCityHistory = cityHistory.slice();
-            localStorage.setItem('cities', []);
-            updatedCityHistory.splice(index, 1);
-            setCityHistory(updatedCityHistory);
-        }
+        const updatedHistory = updatedCityHistory.filter((_, i) => i !== index);
+        setUpdatedCityHistory(updatedHistory);
+        console.log(updatedHistory);
     }
 
     function AddFav() {
@@ -137,17 +134,17 @@ function WeatherBar() {
                     )}
                 </div>
             </div>
-            <div>
+            <div className='fav-main-container'>
                 { updatedCityHistory[0] && (
                     <div>
                         {updatedCityHistory.map((name, index) => (
                             <div className='fav-container'>
-                                <div className='fav inline'>
-                                    <div> {/* add dynamic styling */}
-                                        <p className=' city-name fav-name' key={index}>{name}</p>
+                                <div className='fav inline' key={index}>
+                                    <div>
+                                        <p className=' city-name fav-name' >{name}</p>
                                     </div>
                                     <div className='delete-icon'>
-                                        <FontAwesomeIcon className='fav-icon' icon={faTrashCan} onClick={RemoveFav(0)} />
+                                        <FontAwesomeIcon className='fav-icon' icon={faTrashCan} onClick={() => RemoveFav(index)} />
                                     </div>
                                 </div>
                             </div>
@@ -157,13 +154,13 @@ function WeatherBar() {
                 )}
                 <div>
                     { updatedCityHistory.length < 5 && (
-                        <div className='fav-container'>
+                        <div className='fav-container' onClick={AddFav}>
                             <div className='fav inline'>
-                                <div> {/* add dynamic styling */}
-                                    <p className=' city-name fav-name'>(x/15)</p>
+                                <div>
+                                    <p className=' city-name fav-name'>{updatedCityHistory.length}/5</p>
                                 </div>
                                 <div className='star-icon'>
-                                    <FontAwesomeIcon className='fav-icon' icon={faStar} onClick={AddFav} />
+                                    <FontAwesomeIcon className='fav-icon' icon={faStar} />
                                 </div>
                             </div>
                         </div>
