@@ -151,9 +151,25 @@
 
 .delete-icon {
     color: rgb(108, 108, 108);
-    :hover {
-        color: rgb(208, 58, 20);
-    }
+}
+
+.delete-icon:hover #delete-div {
+    color: rgb(208, 58, 20);
+}
+
+.delete-city {
+    display: none;
+}
+
+.delete-container:hover #delete-div {
+    display: none;
+}
+
+.delete-container:hover #delete-city {
+    display: block;
+    color: rgb(208, 51, 20);
+    font-weight: 600;
+    margin-left: 100px;
 }
 
 .fav-main-container {

@@ -10,7 +10,6 @@ import '../css/WeatherBar.scss';
 import {WeatherContext} from '../providers/weather-provider';
 import WeatherLogos from './WeatherLogos';
 import Graph from './Graphs';
-import {useLocation} from 'react-router-dom';
 import SearchBar from './SearchBar';
 import WeatherMap from './Map';
 import {faTemperatureArrowDown, faTemperatureArrowUp, faTemperatureHigh, faTemperatureThreeQuarters} from '@fortawesome/free-solid-svg-icons';
@@ -18,8 +17,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar, faTrashCan} from '@fortawesome/free-regular-svg-icons';
 
 function WeatherBar() {
-    const [weatherInfos, updateWeather] = useContext(WeatherContext);
-    const location = useLocation();
+    const [weatherInfos, updateWeather, graphInfos, updateGraph, location, setLocation] = useContext(WeatherContext);
     const sunset = new Date(weatherInfos.sys.sunset * 1000);
     const sunrise = new Date(weatherInfos.sys.sunrise * 1000);
     const [tempColor, setTempColor] = useState('black');
@@ -57,7 +55,6 @@ function WeatherBar() {
     function RemoveFav(index) {
         const updatedHistory = updatedCityHistory.filter((_, i) => i !== index);
         setUpdatedCityHistory(updatedHistory);
-        console.log(updatedHistory);
     }
 
     function AddFav() {
@@ -67,6 +64,11 @@ function WeatherBar() {
             localStorage.setItem('cities', JSON.stringify(updatedCityHistory));
             setCityHistory(updatedCityHistory);
         }
+    }
+
+    function ChooseFav(name) {
+        setLocation(name);
+        console.log(name);
     }
 
     useEffect(() => {
@@ -141,10 +143,10 @@ function WeatherBar() {
                             <div className='fav-container' >
                                 <div className='fav inline' key={index}>
                                     <div>
-                                        <p className=' city-name fav-txt' >{name}</p>
+                                        <p id='delete-div' className=' city-name fav-txt' onClick={() => ChooseFav(name)} >{name}</p>
                                     </div>
                                     <div className='delete-icon'>
-                                        <FontAwesomeIcon className='fav-icon' icon={faTrashCan} onClick={() => RemoveFav(index)} />
+                                        <FontAwesomeIcon id='delete-div' className='fav-icon' icon={faTrashCan} onClick={() => RemoveFav(index)} />
                                     </div>
                                 </div>
                             </div>
