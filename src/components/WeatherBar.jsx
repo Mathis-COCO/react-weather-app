@@ -14,6 +14,7 @@ import SearchBar from './SearchBar';
 import WeatherMap from './Map';
 import {faTemperatureArrowDown, faTemperatureArrowUp, faTemperatureHigh, faTemperatureThreeQuarters} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faStar, faTrashCan} from '@fortawesome/free-regular-svg-icons';
 
 function WeatherBar() {
     const [weatherInfos, updateWeather] = useContext(WeatherContext);
@@ -23,6 +24,7 @@ function WeatherBar() {
     const [tempColor, setTempColor] = useState('black');
     const [namePadding, setNamePadding] = useState('0px');
     const [switchTemp, setSwitchTemp] = useState(1);
+    const [cityHistory, setCityHistory] = useState([]);
     const styles = {
         temp: {
             color: tempColor,
@@ -56,6 +58,9 @@ function WeatherBar() {
 
     useEffect(() => {
         ChangeNameWidth();
+        setCityHistory(localStorage.getItem('cities'), weatherInfos.name);
+        localStorage.setItem('cities', JSON.stringify(`${weatherInfos.name}`));
+        console.log(localStorage.getItem('cities'));
     }, [weatherInfos.name]);
 
     return (
@@ -114,7 +119,28 @@ function WeatherBar() {
                         </div></>
                     )}
                 </div>
-
+            </div>
+            <div>
+            <div className='fav-container'>
+                    <div className='fav inline'>
+                        <div> {/* add dynamic styling */}
+                            <p className=' city-name fav-name'>{weatherInfos.name}</p>
+                        </div>
+                        <div className='delete-icon'>
+                            <FontAwesomeIcon className='fav-icon' icon={faTrashCan} />
+                        </div>
+                    </div>
+                </div>
+                <div className='fav-container'>
+                    <div className='fav inline'>
+                        <div> {/* add dynamic styling */}
+                            <p className=' city-name fav-name'>(x/15)</p>
+                        </div>
+                        <div className='star-icon'>
+                            <FontAwesomeIcon className='fav-icon' icon={faStar} />
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

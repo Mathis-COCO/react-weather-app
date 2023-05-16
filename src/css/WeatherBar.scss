@@ -66,11 +66,14 @@
     margin-right: 25px;
 }
 
+.city-name {
+    font-weight: 600;
+    color: grey;
+}
+
 .city-name-container {
     width: 300px;
     height: 100px;
-    font-weight: 600;
-    color: grey;
     margin-left: 30px;
     padding: 0 25px 0 25px;
 }
@@ -119,6 +122,39 @@
     color: rgb(200, 55, 36);
 }
 
-.temp-map-container {
+.fav-container {
     margin-bottom: 100px;
+}
+
+.fav {
+    background-color: white;
+    border-radius: 25px;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+    white-space: nowrap;
+}
+
+.fav-name {
+    margin-left: 40px;
+}
+
+.fav-icon {
+    margin-right: 40px;
+}
+
+.star-icon {
+    color: rgb(108, 108, 108);
+    :hover {
+        color: rgb(208, 208, 20);
+    }
+}
+
+.delete-icon {
+    color: rgb(108, 108, 108);
+    :hover {
+        color: rgb(208, 58, 20);
+    }
 }

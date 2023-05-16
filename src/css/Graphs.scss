@@ -1,11 +1,11 @@
 .graph-main {
     background-color:white;
     border-radius: 25px;
-    overflow: scroll;
     margin-top: -10px;
 }
 
 .temp-data-popup {
+    overflow: scroll;
     width: 100%;
     height: 100%;
     padding-top: 25px;
@@ -13,7 +13,6 @@
     display: flex;
     justify-content: center;
     line-height: 25px;
-    overflow: scroll;
 }
 
 .wind-graph {
