@@ -78,7 +78,9 @@ function WeatherBar() {
 
     useEffect(() => {
         const localData = [localStorage.getItem('cities')];
-        setFavorites(JSON.parse(localData));
+        if (localData) {
+            setFavorites(JSON.parse(localData));
+        }
     }, []);
 
     return (
