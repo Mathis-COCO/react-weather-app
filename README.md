@@ -1,6 +1,6 @@
 # React Weather App 
 
-If you want to check my project in real time, you can see it at mathiscoco.fr
+If you want to check my project in real time, you can see it at https://mathiscoco.fr
 
 Current pages
 ![Homepage Image](./src/img/site_preview_1.png)
